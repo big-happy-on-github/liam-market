@@ -32,21 +32,23 @@ header {
 
 header h1 {
     font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+header h1 a {
+    color: #fff;
+    text-decoration: none;
 }
 
 nav ul {
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 nav ul li {
     display: inline;
     margin: 0 1rem;
-}
-
-h1 a {
-    color: #fff;
-    text-decoration: none;
 }
 
 nav ul li a {
@@ -55,9 +57,8 @@ nav ul li a {
     font-size: 1.1rem;
 }
 
-nav ul li a:hover, h1 a:hover {
+nav ul li a:hover {
     text-decoration: underline;
-    color: #fff;
 }
 
 /* Main Content */
