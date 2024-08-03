@@ -44,6 +44,10 @@ nav ul li a:hover, h1 a:hover {
     color: #fff;
 }
 
+h1 a {
+    color: #fff;
+}
+
 /* Main Content */
 main {
     padding: 2rem;
