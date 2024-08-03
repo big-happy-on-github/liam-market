@@ -139,9 +139,9 @@ footer {
 
 @keyframes marquee {
     0% {
-        transform: translateX(100%); /* Start from right */
+        transform: translateX(-100%); /* Start from right */
     }
     100% {
-        transform: translateX(-100%); /* End at left */
+        transform: translateX(50%); /* End at left */
     }
 }
