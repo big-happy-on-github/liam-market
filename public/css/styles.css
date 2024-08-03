@@ -39,7 +39,7 @@ nav ul li a {
     font-size: 1.1rem;
 }
 
-nav ul li a:hover, h1:hover {
+nav ul li a:hover, h1 a:hover {
     text-decoration: underline;
 }
 
