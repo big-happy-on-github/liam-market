@@ -137,7 +137,7 @@ footer {
     width: 100%;
 }
 
-@keyframes marquee {
+@keyframes #hotMarquee {
     0% {
         transform: translateX(-100%); /* Start from right */
     }
