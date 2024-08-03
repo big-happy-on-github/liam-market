@@ -33,6 +33,11 @@ nav ul li {
     margin: 0 1rem;
 }
 
+h1 a {
+    color: #fff;
+    text-decoration: none;
+}
+
 nav ul li a {
     color: #fff;
     text-decoration: none;
@@ -41,10 +46,6 @@ nav ul li a {
 
 nav ul li a:hover, h1 a:hover {
     text-decoration: underline;
-    color: #fff;
-}
-
-h1 a {
     color: #fff;
 }
 
