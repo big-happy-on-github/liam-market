@@ -137,11 +137,15 @@ footer {
     width: 100%;
 }
 
-@keyframes #hotMarquee {
+@keyframes hotMarquee {
     0% {
-        transform: translateX(-100%); /* Start from right */
+        transform: translateX(100%); /* Start from right */
     }
     100% {
-        transform: translateX(50%); /* End at left */
+        transform: translateX(-100%); /* End at left */
     }
+}
+
+hotMarquee {
+    animation: hotMarquee 0.75s linear infinite;
 }
