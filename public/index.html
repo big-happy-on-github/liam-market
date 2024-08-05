@@ -87,23 +87,32 @@
         <marquee>&copy; 2024 Liam's Marketplace</marquee>
     </footer>
 
-    <script src="index.html">
-        for (let article in querySelector("article")) {
-            for (let product in products) {
-                if (article.id == product) {
-                    article.querySelector(img).src = product.img;
-                    article.querySelector(img).alt = product.name;
-                    article.querySelector(h2).textContent = product.name;
-                    article.querySelector(p).textContent = product.price;
-                    article.querySelector(button).onclick = `window.location.href='product?id=${article.id}`
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('article.product').forEach(article => {
+                const product = products.find(p => p.id === article.id);
+        
+                if (product) {
+                    const img = article.querySelector('img');
+                    const h2 = article.querySelector('h2');
+                    const p = article.querySelector('p');
+                    const button = article.querySelector('button');
+        
+                    if (img) img.src = product.img;
+                    if (img) img.alt = product.name;
+                    if (h2) h2.textContent = product.name;
+                    if (p) p.textContent = product.price;
+                    if (button) button.onclick = () => window.location.href = `product?id=${article.id}`;
+        
                     if (!product.hot) {
-                        article.removeChild(article.querySelector("h1"));
+                        const h1 = article.querySelector('h1');
+                        if (h1) article.removeChild(h1);
                     } else {
-                        article.querySelector(p).textContent = `🔥${article.querySelector(p).textContent}`
+                        if (p) p.textContent = `🔥${p.textContent}`;
                     }
                 }
-            }
-        }
+            });
+        });
     </script>
 </body>
 </html>
