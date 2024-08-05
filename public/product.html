@@ -36,22 +36,46 @@
     </footer>
 
     <script>
-        products = {};
-        products["1"] = { name: "Sugarcane Sticks (4 pack)", img: "https://via.placeholder.com/200", price: 25.25, hot: true }
-        
-        exports.handler = async event => {
-            const productId = event.queryStringParameters.id;
-            const product = document.querySelector(".product");
+        // Define product data
+        const products = {
+            "1": { name: "Sugarcane Sticks (4 pack)", img: "https://via.placeholder.com/200", price: 25.25, hot: true },
+            // Add more products as needed
+        };
 
-            product.children[1].src = products[productID].img;
-            product.children[2].textContent = products[productID].name;
-            product.children[3].textContent = "$"+products[productID].price;
+        // Function to get query parameter value by name
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
 
-            if (!products[productId].hot) {
-                product.removeChild(product.children[0]); 
+        // Function to update product based on ID
+        function updateProduct(productId) {
+            const product = products[productId];
+            if (!product) return;
+
+            const productElement = document.getElementById('product');
+            const statusElement = document.getElementById('product-status');
+            const imgElement = document.getElementById('product-img');
+            const nameElement = document.getElementById('product-name');
+            const priceElement = document.getElementById('product-price');
+
+            imgElement.src = product.img;
+            nameElement.textContent = product.name;
+            priceElement.textContent = `$${product.price.toFixed(2)}`;
+
+            if (!product.hot) {
+                statusElement.style.display = 'none';
             } else {
-                product.children[2].textContent = "🔥"+product.children[2].textContent;
+                statusElement.textContent = `🔥${statusElement.textContent}`;
             }
+        }
+
+        // Get the product ID from the URL and update the product
+        const productId = getQueryParam('id');
+        if (productId) {
+            updateProduct(productId);
+        } else {
+            console.error('Product ID is missing in the URL');
         }
     </script>
 </body>
