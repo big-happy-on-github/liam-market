@@ -91,7 +91,7 @@
     <script>
         async function fetchProducts() {
             try {
-                const response = await fetch("https://api.example.com/products"); // Update URL to the correct endpoint
+                const response = await fetch("/netlify/functions/products.js"); // Update URL to the correct endpoint
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
