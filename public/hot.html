@@ -20,31 +20,7 @@
     </header>
 
     <main>
-        <section class="product-container">
-            <article class="product" id="U3VnYXJjYW5lIFN0aWNrcyAoNCBwYWNrKQ==">
-                <h1>🔥hot deal🔥</h1>
-                <img src="https://via.placeholder.com/200" alt="Product 1">
-                <h2>Sugar</h2>
-                <p>🔥$5.99</p>
-                <button onclick="window.location.href='product?id=U3VnYXJjYW5lIFN0aWNrcyAoNCBwYWNrKQ=='">lemme buy it</button>
-            </article>
-
-            <article class="product" id="NG96IFN1Z2FyY2FuZSBKdWljZQ==">
-                <h1>🔥hot deal🔥</h1>
-                <img src="https://via.placeholder.com/200" alt="Product 2">
-                <h2>4oz Sugarcane Juice</h2>
-                <p>🔥$8.99</p>
-                <button onclick="window.location.href='product?id=NG96IFN1Z2FyY2FuZSBKdWljZQ=='">lemme buy it</button>
-            </article>
-
-            <article class="product">
-                <h1>🔥hot deal🔥</h1>
-                <img src="https://via.placeholder.com/200" alt="Product 3">
-                <h2>Product 3</h2>
-                <p>🔥$30.00</p>
-                <button>lemme buy it</button>
-            </article>
-        </section>
+        <section id="hot-products" class="product-container"></section>
     </main>
 
     <footer>
@@ -71,25 +47,39 @@
             const products = await fetchProducts();
             
             if (products) {
-                document.querySelectorAll('article.product').forEach(article => {                   
-                    if (products[article.id]) {
-                        const img = article.querySelector('img');
-                        const h2 = article.querySelector('h2');
-                        const p = article.querySelector('p');
-                        const button = article.querySelector('button');
-                        
-                        if (img) img.src = products[article.id].img;
-                        if (img) img.alt = products[article.id].name;
-                        if (h2) h2.textContent = products[article.id].name;
-                        if (p) p.textContent = `$${products[article.id].price}`;
-                        if (button) button.onclick = () => window.location.href = `product?id=${article.id}`;
-                        
-                        if (!products[article.id].hot) {
-                            const h1 = article.querySelector('h1');
-                            if (h1) article.removeChild(h1);
-                        } else {
-                            if (p) p.textContent = `🔥${p.textContent}`;
-                        }
+                const hotProductsContainer = document.getElementById('hot-products');
+
+                Object.keys(products).forEach(productId => {
+                    const product = products[productId];
+
+                    if (product.hot) {
+                        const article = document.createElement('article');
+                        article.classList.add('product');
+                        article.id = productId;
+
+                        const h1 = document.createElement('h1');
+                        h1.textContent = '🔥hot deal🔥';
+                        article.appendChild(h1);
+
+                        const img = document.createElement('img');
+                        img.src = product.img;
+                        img.alt = product.name;
+                        article.appendChild(img);
+
+                        const h2 = document.createElement('h2');
+                        h2.textContent = product.name;
+                        article.appendChild(h2);
+
+                        const p = document.createElement('p');
+                        p.textContent = `🔥$${product.price}`;
+                        article.appendChild(p);
+
+                        const button = document.createElement('button');
+                        button.textContent = 'lemme buy it';
+                        button.onclick = () => window.location.href = `product?id=${productId}`;
+                        article.appendChild(button);
+
+                        hotProductsContainer.appendChild(article);
                     }
                 });
             }
