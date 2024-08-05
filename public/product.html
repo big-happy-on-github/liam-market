@@ -34,5 +34,25 @@
     <footer>
         <marquee>&copy; 2024 Liam's Marketplace</marquee>
     </footer>
+
+    <script>
+        products = {};
+        products["1"] = { name: "Sugarcane Sticks (4 pack)", img: "https://via.placeholder.com/200", price: 25.25, hot: true }
+        
+        exports.handler = async event => {
+            const productId = event.queryStringParameters.id;
+            const product = document.querySelector(".product");
+
+            product.children[1].src = products[productID].img;
+            product.children[2].textContent = products[productID].name;
+            product.children[3].textContent = "$"+products[productID].price;
+
+            if (!products[productId].hot) {
+                product.removeChild(product.children[0]); 
+            } else {
+                product.children[2].textContent = "🔥"+product.children[2].textContent;
+            }
+        }
+    </script>
 </body>
 </html>
