@@ -6,11 +6,6 @@ const products = {
 exports.handler = async event => {
     return {
         statusCode: 200,
-        headers: {
-            'Access-Control-Allow-Origin': '*', // Allows any origin to access the resources
-            'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', // Adjust methods as needed
-            'Access-Control-Allow-Headers': 'Content-Type', // Allows specific headers
-        },
         body: JSON.stringify(products),
     }
 }
