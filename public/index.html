@@ -58,9 +58,13 @@
                     article.classList.add('product');
                     article.id = productId;
 
-                    const h1 = document.createElement('h1');
+                    let h1 = document.createElement('h1');
                     h1.textContent = product.hot ? '🔥hot deal🔥' : '';
                     if (product.hot) {
+                        article.appendChild(h1);
+                    } else {
+                        h1 = document.createElement('h1');
+                        h1.textContent = '';
                         article.appendChild(h1);
                     }
 
