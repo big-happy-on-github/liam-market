@@ -24,7 +24,7 @@
     </main>
 
     <footer>
-        <marquee>&copy; 2024 Liam's Marketplace</marquee>
+        <span>&copy; 2024 Liam's Marketplace</span>
     </footer>
 
     <script>
@@ -36,18 +36,25 @@
                 },
                 body: JSON.stringify({ none: true })
             };
-        
-            const response = await fetch(`/.netlify/functions/products`, options);
-            const data = await response.json();
-            console.log(data);
-            return data;
+
+            try {
+                const response = await fetch(`/.netlify/functions/products`, options);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                console.log(data);
+                return data;
+            } catch (error) {
+                console.error('There was a problem with the fetch operation:', error);
+            }
         }
-        
+
         document.addEventListener('DOMContentLoaded', async () => {
             const products = await fetchProducts();
             
             if (products) {
-                const hotProductsContainer = document.getElementById('food-products');
+                const foodProductsContainer = document.getElementById('food-products');
 
                 Object.keys(products).forEach(productId => {
                     const product = products[productId];
@@ -63,7 +70,7 @@
 
                         const img = document.createElement('img');
                         img.src = product.img;
-                        img.alt = product.name;
+                        img.alt = product.name || 'Product Image';
                         article.appendChild(img);
 
                         const h2 = document.createElement('h2');
@@ -75,11 +82,11 @@
                         article.appendChild(p);
 
                         const button = document.createElement('button');
-                        button.textContent = 'lemme buy it';
+                        button.textContent = 'Let me buy it';
                         button.onclick = () => window.location.href = `product?id=${productId}`;
                         article.appendChild(button);
 
-                        hotProductsContainer.appendChild(article);
+                        foodProductsContainer.appendChild(article);
                     }
                 });
             }
