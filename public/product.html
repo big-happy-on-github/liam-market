@@ -145,10 +145,11 @@
                             const h1 = article.querySelector('h1');
                             if (h1) article.removeChild(h1); // Remove "Hot Deal" if not a hot deal
                         } else {
-                            if (product.food) {
+                            if (product.food && !product.hot) {
                                 h1.textContent = "food&drink";
+                            } else {
+                                if (p) p.textContent = `🔥 $${product.price.toFixed(2)}`; // Add fire emoji if it's a hot deal
                             }
-                            if (p) p.textContent = `🔥 $${product.price.toFixed(2)}`; // Add fire emoji if it's a hot deal
                         }
                     } else {
                         console.warn(`No product found with ID: ${productID}`); // Log warning if product not found
