@@ -120,7 +120,7 @@
                         if (p) p.textContent = `$${products[article.id].price}`;
                         if (button) button.onclick = () => window.location.href = `product?id=${article.id}`;
                         
-                        if (!product.hot) {
+                        if (!products[article.id].hot) {
                             const h1 = article.querySelector('h1');
                             if (h1) article.removeChild(h1);
                         } else {
