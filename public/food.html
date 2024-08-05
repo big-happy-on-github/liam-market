@@ -66,6 +66,9 @@
 
                         const h1 = document.createElement('h1');
                         h1.textContent = 'food&drink';
+                        if (product.hot) {
+                            h1.textContent = '🔥hot deal🔥';
+                        }
                         article.appendChild(h1);
 
                         const img = document.createElement('img');
@@ -79,6 +82,9 @@
 
                         const p = document.createElement('p');
                         p.textContent = `$${product.price}`;
+                        if (product.hot) {
+                            p.textContent = `🔥${p.textContent}`;
+                        }
                         article.appendChild(p);
 
                         const button = document.createElement('button');
