@@ -74,9 +74,9 @@
         <section class="product-container">
             <article class="product" id="product">
                 <h1 id="product-status">🔥hot deal🔥</h1>
-                <img src="https://via.placeholder.com/200" alt="Product 1" id="product-img">
-                <h2 id="product-name">Product 1</h2>
-                <p id="product-price">🔥$10.00</p>
+                <img src="https://via.placeholder.com/200" alt="ERROR" id="product-img">
+                <h2 id="product-name">ERROR</h2>
+                <p id="product-price">🔥$00.00</p>
                 <button id="apple-buy-button">Apple Pay</button>
                 <p> or</p>
                 <button id="credit-buy-button">Credit Card</button>
@@ -113,6 +113,7 @@
             const priceElement = document.getElementById('product-price');
 
             imgElement.src = product.img;
+            imgElement.alt = product.name;
             nameElement.textContent = product.name;
             priceElement.textContent = `$${product.price.toFixed(2)}`;
 
