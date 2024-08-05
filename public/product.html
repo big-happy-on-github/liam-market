@@ -55,17 +55,34 @@
         button:hover {
             background-color: #2980b9;
         }
+        
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background: #f8f8f8;
+            margin-top: 2rem;
+        }
+
+        .status-marquee {
+            animation: marquee 10s linear infinite;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        @keyframes marquee {
+            from { transform: translateX(100%); }
+            to { transform: translateX(-100%); }
+        }
     </style>
 </head>
 <body>
     <header>
-        <h1><a href="/">liam's marketplace</a> 😎</h1>
-        <br>
+        <h1><a href="/" aria-label="Go to homepage">Liam's Marketplace</a> 😎</h1>
         <nav>
             <ul>
-                <li>🔥<a href="#">hot deals</a>🔥</li>
-                <li><a href="#">food & drink</a></li>
-                <li><a href="#">other items</a></li>
+                <li>🔥<a href="#">Hot Deals</a>🔥</li>
+                <li><a href="#">Food & Drink</a></li>
+                <li><a href="#">Other Items</a></li>
             </ul>
         </nav>
     </header>
@@ -73,35 +90,39 @@
     <main>
         <section class="product-container">
             <article class="product" id="product">
-                <h1 id="product-status">🔥hot deal🔥</h1>
-                <img src="https://via.placeholder.com/200" alt="ERROR" id="product-img">
-                <h2 id="product-name">ERROR</h2>
-                <p id="product-price">🔥$00.00</p>
+                <h1 id="product-status">🔥 Hot Deal 🔥</h1>
+                <img src="https://via.placeholder.com/200" alt="Product Image" id="product-img">
+                <h2 id="product-name">Product Name</h2>
+                <p id="product-price">$00.00</p>
                 <button id="apple-buy-button">Apple Pay</button>
-                <p> or</p>
+                <p>or</p>
                 <button id="credit-buy-button">Credit Card</button>
             </article>
         </section>
     </main>
 
     <footer>
-        <marquee>&copy; 2024 Liam's Marketplace</marquee>
+        <div class="status-marquee">&copy; 2024 Liam's Marketplace</div>
     </footer>
 
     <script>
         async function fetchProducts() {
-            const options = {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ none: true })
-            };
-        
-            const response = await fetch(`/.netlify/functions/products`, options);
-            const data = await response.json();
-            console.log(data);
-            return data;
+            try {
+                const response = await fetch('/.netlify/functions/products', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ none: true })
+                });
+                if (!response.ok) throw new Error('Network response was not ok.');
+                const data = await response.json();
+                console.log(data);
+                return data;
+            } catch (error) {
+                console.error('There has been a problem with your fetch operation:', error);
+                return [];
+            }
         }
     
         document.addEventListener('DOMContentLoaded', async () => {
@@ -115,15 +136,17 @@
                         const img = article.querySelector('img');
                         const h2 = article.querySelector('h2');
                         const p = article.querySelector('p');
-                        const button = article.querySelector('button');
+                        const buttons = article.querySelectorAll('button');
     
                         if (img) {
                             img.src = product.img;
-                            img.alt = product.name;
+                            img.alt = product.name || 'Product Image';
                         }
-                        if (h2) h2.textContent = product.name;
-                        if (p) p.textContent = `$${product.price}`;
-                        if (button) button.onclick = () => window.location.href = `product?id=${product.id}`;
+                        if (h2) h2.textContent = product.name || 'Product Name';
+                        if (p) p.textContent = `$${product.price || '00.00'}`;
+                        buttons.forEach(button => {
+                            button.onclick = () => window.location.href = `product?id=${product.id}`;
+                        });
     
                         if (!product.hot) {
                             const h1 = article.querySelector('h1');
