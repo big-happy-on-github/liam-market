@@ -141,10 +141,13 @@
                             button.onclick = () => window.location.href = `product?id=${productID}`; // Set button action
                         });
             
-                        if (!product.hot) {
+                        if (!product.hot && !product.food) {
                             const h1 = article.querySelector('h1');
                             if (h1) article.removeChild(h1); // Remove "Hot Deal" if not a hot deal
                         } else {
+                            if (product.food) {
+                                h1.textContent = "food&drink";
+                            }
                             if (p) p.textContent = `🔥 $${product.price.toFixed(2)}`; // Add fire emoji if it's a hot deal
                         }
                     } else {
