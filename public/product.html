@@ -91,14 +91,21 @@
     <script>
         async function fetchProducts() {
             try {
-                const response = await fetch("/netlify/functions/products.js"); // Update URL to the correct endpoint
+                const response = await fetch("https://github.com/big-happy-on-github/liam-market/blob/4a24cd5fbb9460de6821de3cb44e47c011c3a856/netlify/functions/products.js", {
+                    method: 'GET', // Explicitly set the method to GET
+                    headers: {
+                        'Content-Type': 'application/json' // Specify the type of content you're expecting
+                    },
+                    // You can add other options here if needed, such as credentials or mode
+                });
+        
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
+        
                 return await response.json();
             } catch (error) {
                 console.error('There was a problem with the fetch operation:', error);
-                return []; // Return an empty array to ensure the rest of the code handles it gracefully
             }
         }
     
