@@ -58,15 +58,15 @@
                     article.classList.add('product');
                     article.id = productId;
 
-                    let h1 = document.createElement('h1');
-                    h1.textContent = product.hot ? '🔥hot deal🔥' : product.food ? 'food&drink';
-                    if (product.hot || product.food) {
+                    const h1 = document.createElement('h1');
+                    h1.textContent = product.hot ? '🔥 hot deal 🔥' : (product.food ? 'food&drink' : '');
+                    if (h1.textContent) {
                         article.appendChild(h1);
                     }
                     
                     const img = document.createElement('img');
                     img.src = product.img;
-                    img.alt = product.name;
+                    img.alt = product.name || 'Product Image';
                     article.appendChild(img);
 
                     const h2 = document.createElement('h2');
@@ -74,14 +74,11 @@
                     article.appendChild(h2);
 
                     const p = document.createElement('p');
-                    p.textContent = `$${product.price}`;
-                    if (product.hot) {
-                        p.textContent = `🔥$${product.price}`;
-                    }
+                    p.textContent = product.hot ? `🔥 $${product.price}` : `$${product.price}`;
                     article.appendChild(p);
 
                     const button = document.createElement('button');
-                    button.textContent = 'lemme buy it';
+                    button.textContent = 'Let me buy it';
                     button.onclick = () => window.location.href = `product?id=${productId}`;
                     article.appendChild(button);
 
