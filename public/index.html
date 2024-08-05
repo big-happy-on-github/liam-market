@@ -92,9 +92,9 @@
             try {
                 const response = await fetch("https://github.com/big-happy-on-github/liam-market/blob/7d33de414a9cfe7544b07d5befd4efbd25973b4a/netlify/functions/products.js", { mode: 'no-cors' });
         
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
+                //if (!response.ok) {
+                    //throw new Error('Network response was not ok');
+                //}
         
                 return await response.json();
             } catch (error) {
