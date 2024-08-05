@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liam's Marketplace</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <h1><a href="/">liam's marketplace</a> 😎</h1>
+        <br>
+        <nav>
+            <ul>
+                <li>🔥<a href="hot">hot deals</a>🔥</li>
+                <li><a href="food">food & drink</a></li>
+                <li><a href="#">other items</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="product-container">
+            <article class="product" id="U3VnYXJjYW5lIFN0aWNrcyAoNCBwYWNrKQ==">
+                <h1>🔥hot deal🔥</h1>
+                <img src="https://via.placeholder.com/200" alt="Product 1">
+                <h2>Sugar</h2>
+                <p>🔥$5.99</p>
+                <button onclick="window.location.href='product?id=U3VnYXJjYW5lIFN0aWNrcyAoNCBwYWNrKQ=='">lemme buy it</button>
+            </article>
+
+            <article class="product" id="NG96IFN1Z2FyY2FuZSBKdWljZQ==">
+                <h1>🔥hot deal🔥</h1>
+                <img src="https://via.placeholder.com/200" alt="Product 2">
+                <h2>4oz Sugarcane Juice</h2>
+                <p>🔥$8.99</p>
+                <button onclick="window.location.href='product?id=NG96IFN1Z2FyY2FuZSBKdWljZQ=='">lemme buy it</button>
+            </article>
+
+            <article class="product">
+                <h1>🔥hot deal🔥</h1>
+                <img src="https://via.placeholder.com/200" alt="Product 3">
+                <h2>Product 3</h2>
+                <p>🔥$30.00</p>
+                <button>lemme buy it</button>
+            </article>
+        </section>
+    </main>
+
+    <footer>
+        <marquee>&copy; 2024 Liam's Marketplace</marquee>
+    </footer>
+
+    <script>
+        async function fetchProducts() {
+            const options = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ none: true })
+            };
+        
+            const response = await fetch(`/.netlify/functions/products`, options);
+            const data = await response.json();
+            console.log(data);
+            return data;
+        }
+        
+        document.addEventListener('DOMContentLoaded', async () => {
+            const products = await fetchProducts();
+            
+            if (products) {
+                document.querySelectorAll('article.product').forEach(article => {                   
+                    if (products[article.id]) {
+                        const img = article.querySelector('img');
+                        const h2 = article.querySelector('h2');
+                        const p = article.querySelector('p');
+                        const button = article.querySelector('button');
+                        
+                        if (img) img.src = products[article.id].img;
+                        if (img) img.alt = products[article.id].name;
+                        if (h2) h2.textContent = products[article.id].name;
+                        if (p) p.textContent = `$${products[article.id].price}`;
+                        if (button) button.onclick = () => window.location.href = `product?id=${article.id}`;
+                        
+                        if (!products[article.id].hot) {
+                            const h1 = article.querySelector('h1');
+                            if (h1) article.removeChild(h1);
+                        } else {
+                            if (p) p.textContent = `🔥${p.textContent}`;
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
