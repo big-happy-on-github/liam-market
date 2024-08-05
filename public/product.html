@@ -129,10 +129,9 @@
             const products = await fetchProducts();
             
             // Ensure the products object is properly formatted and contains the correct data
-            if (typeof products === 'object') {
+            if (true) {
                 document.querySelectorAll('article.product').forEach(article => {
-                    const productId = article.id; // Get the product ID from the article element
-                    const product = products[productId]; // Find the product data by ID
+                    const product = products[article.id]; // Find the product data by ID
             
                     if (product) {
                         const img = article.querySelector('img');
