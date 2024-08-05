@@ -127,11 +127,14 @@
         
         document.addEventListener('DOMContentLoaded', async () => {
             const products = await fetchProducts();
+            const url = new URL(window.location.href);
+            const params = new URLSearchParams(url.search);
+            const productID = params.get('id');
             
             // Ensure the products object is properly formatted and contains the correct data
             if (true) {
                 document.querySelectorAll('article.product').forEach(article => {
-                    const product = products[article.id]; // Find the product data by ID
+                    const product = products[productID]; // Find the product data by ID
             
                     if (product) {
                         const img = article.querySelector('img');
@@ -146,7 +149,7 @@
                         if (h2) h2.textContent = product.name || 'Product Name'; // Set product name
                         if (p) p.textContent = `$${product.price.toFixed(2)}`; // Set product price, formatted to 2 decimal places
                         buttons.forEach(button => {
-                            button.onclick = () => window.location.href = `product?id=${article.id}`; // Set button action
+                            button.onclick = () => window.location.href = `product?id=${productID}`; // Set button action
                         });
             
                         if (!product.hot) {
@@ -156,7 +159,7 @@
                             if (p) p.textContent = `🔥 $${product.price.toFixed(2)}`; // Add fire emoji if it's a hot deal
                         }
                     } else {
-                        console.warn(`No product found with ID: ${article.id}`); // Log warning if product not found
+                        console.warn(`No product found with ID: ${productID}`); // Log warning if product not found
                     }
                 });
             } else {
