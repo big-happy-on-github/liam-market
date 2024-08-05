@@ -29,7 +29,6 @@
         
         .product h1 {
             font-size: 1.5rem;
-            color: #e74c3c;
         }
         
         .product h2 {
@@ -39,7 +38,6 @@
         
         .product p {
             font-size: 1.125rem;
-            color: #e74c3c;
             margin: 1rem 0;
         }
         
@@ -79,7 +77,7 @@
                 <img src="https://via.placeholder.com/200" alt="Product 1" id="product-img">
                 <h2 id="product-name">Product 1</h2>
                 <p id="product-price">🔥$10.00</p>
-                <button id="buy-button">lemme buy it</button>
+                <button id="buy-button">Apple Pay</button>
             </article>
         </section>
     </main>
@@ -91,7 +89,7 @@
     <script>
         // Define product data
         const products = {
-            "1": { name: "Sugarcane Sticks (4 pack)", img: "https://via.placeholder.com/200", price: 25.25 },
+            "1": { name: "Sugarcane Sticks (4 pack)", img: "https://via.placeholder.com/200", price: 25.25, hot: true },
             // Add more products as needed
         };
 
@@ -118,8 +116,6 @@
 
             if (!product.hot) {
                 statusElement.style.display = 'none';
-            } else {
-                priceElement.textContent = `🔥${statusElement.textContent}`;
             }
         }
 
