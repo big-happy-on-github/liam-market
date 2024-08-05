@@ -59,8 +59,8 @@
                     article.id = productId;
 
                     let h1 = document.createElement('h1');
-                    h1.textContent = product.hot ? '🔥hot deal🔥' : '';
-                    if (product.hot) {
+                    h1.textContent = product.hot ? '🔥hot deal🔥' : product.food ? 'food&drink';
+                    if (product.hot || product.food) {
                         article.appendChild(h1);
                     }
                     
