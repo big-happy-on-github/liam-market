@@ -92,7 +92,6 @@
         // Define product data
         const products = {
             "1": { name: "Sugarcane Sticks (4 pack)", img: "https://via.placeholder.com/200", price: 25.25, hot: true },
-            // Add more products as needed
         };
 
         // Function to get query parameter value by name
@@ -104,7 +103,9 @@
         // Function to update product based on ID
         function updateProduct(productId) {
             const product = products[productId];
-            if (!product) return;
+            if (!product) {
+                window.location.href = "/";
+            }
 
             const productElement = document.getElementById('product');
             const statusElement = document.getElementById('product-status');
