@@ -114,10 +114,10 @@
                         const p = article.querySelector('p');
                         const button = article.querySelector('button');
                         
-                        if (img) img.src = product.img;
-                        if (img) img.alt = product.name;
-                        if (h2) h2.textContent = product.name;
-                        if (p) p.textContent = `$${product.price}`;
+                        if (img) img.src = products[article.id].img;
+                        if (img) img.alt = products[article.id].name;
+                        if (h2) h2.textContent = products[article.id].name;
+                        if (p) p.textContent = `$${products[article.id].price}`;
                         if (button) button.onclick = () => window.location.href = `product?id=${article.id}`;
                         
                         if (!product.hot) {
