@@ -62,12 +62,8 @@
                     h1.textContent = product.hot ? '🔥hot deal🔥' : '';
                     if (product.hot) {
                         article.appendChild(h1);
-                    } else {
-                        h1 = document.createElement('h1');
-                        h1.textContent = '‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ';
-                        article.appendChild(h1);
                     }
-
+                    
                     const img = document.createElement('img');
                     img.src = product.img;
                     img.alt = product.name;
