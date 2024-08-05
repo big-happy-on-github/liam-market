@@ -59,7 +59,7 @@
                 Object.keys(products).forEach(productId => {
                     const product = products[productId];
 
-                    if (product.food) {
+                    if (!product.food) {
                         const article = document.createElement('article');
                         article.classList.add('product');
                         article.id = productId;
