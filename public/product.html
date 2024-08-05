@@ -5,6 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liam's Marketplace</title>
     <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .product-container {
+            display: flex;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .product {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 2rem;
+            text-align: center;
+            max-width: 300px;
+            width: 100%;
+        }
+        
+        .product img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+        
+        .product h1 {
+            font-size: 1.5rem;
+            color: #e74c3c;
+        }
+        
+        .product h2 {
+            font-size: 1.25rem;
+            color: #333;
+        }
+        
+        .product p {
+            font-size: 1.125rem;
+            color: #e74c3c;
+            margin: 1rem 0;
+        }
+        
+        button {
+            background-color: #3498db;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 1rem;
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -66,7 +119,7 @@
             if (!product.hot) {
                 statusElement.style.display = 'none';
             } else {
-                statusElement.textContent = `🔥${statusElement.textContent}`;
+                priceElement.textContent = `🔥${statusElement.textContent}`;
             }
         }
 
