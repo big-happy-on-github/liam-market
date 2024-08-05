@@ -107,11 +107,8 @@
             const products = await fetchProducts();
             
             if (products) {
-                document.querySelectorAll('article.product').forEach(article => {
-                    // Convert the product dictionary to an array and find the product
-                    const product = Object.values(products).find(p => p.id === article.id);
-                    
-                    if (product) {
+                document.querySelectorAll('article.product').forEach(article => {                   
+                    if (products[article.id]) {
                         const img = article.querySelector('img');
                         const h2 = article.querySelector('h2');
                         const p = article.querySelector('p');
