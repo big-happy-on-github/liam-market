@@ -90,7 +90,7 @@
     <script>
         async function fetchProducts() {
             try {
-                const response = await fetch("/netlify/functions/products.js");
+                const response = await fetch("/.netlify/functions/products.js");
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
