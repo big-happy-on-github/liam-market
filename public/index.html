@@ -21,7 +21,7 @@
 
     <main>
         <section class="product-container">
-            <article class="product">
+            <article class="product" id="U3VnYXJjYW5lIFN0aWNrcyAoNCBwYWNrKQ==">
                 <h1>🔥hot deal🔥</h1>
                 <img src="https://via.placeholder.com/200" alt="Product 1">
                 <h2>Sugarcane Sticks x4</h2>
@@ -29,7 +29,7 @@
                 <button onclick="window.location.href='product?id=U3VnYXJjYW5lIFN0aWNrcyAoNCBwYWNrKQ=='">lemme buy it</button>
             </article>
 
-            <article class="product">
+            <article class="product" id="NG96IFN1Z2FyY2FuZSBKdWljZQ==">
                 <h1>🔥hot deal🔥</h1>
                 <img src="https://via.placeholder.com/200" alt="Product 2">
                 <h2>4oz Sugarcane Juice</h2>
@@ -87,6 +87,23 @@
         <marquee>&copy; 2024 Liam's Marketplace</marquee>
     </footer>
 
-    <script src="app.js"></script>
+    <script src="index.html">
+        for (let article in querySelector("article")) {
+            for (let product in products) {
+                if (article.id == product) {
+                    article.querySelector(img).src = product.img;
+                    article.querySelector(img).alt = product.name;
+                    article.querySelector(h2).textContent = product.name;
+                    article.querySelector(p).textContent = product.price;
+                    article.querySelector(button).onclick = `window.location.href='product?id=${article.id}`
+                    if (!product.hot) {
+                        article.removeChild(article.querySelector("h1"));
+                    } else {
+                        article.querySelector(p).textContent = `🔥${article.querySelector(p).textContent}`
+                    }
+                }
+            }
+        }
+    </script>
 </body>
 </html>
