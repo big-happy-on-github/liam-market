@@ -117,45 +117,51 @@
                 });
                 if (!response.ok) throw new Error('Network response was not ok.');
                 const data = await response.json();
-                console.log(data);
+                console.log(data); // Ensure data is in the correct format
                 return data;
             } catch (error) {
                 console.error('There has been a problem with your fetch operation:', error);
-                return [];
+                return {}; // Return empty object if error occurs
             }
         }
-    
+        
         document.addEventListener('DOMContentLoaded', async () => {
             const products = await fetchProducts();
-    
-            if (products.length > 0) {
+            
+            // Ensure the products object is properly formatted and contains the correct data
+            if (typeof products === 'object') {
                 document.querySelectorAll('article.product').forEach(article => {
-                    const product = products.find(p => p.id === article.id);
-    
+                    const productId = article.id; // Get the product ID from the article element
+                    const product = products[productId]; // Find the product data by ID
+            
                     if (product) {
                         const img = article.querySelector('img');
                         const h2 = article.querySelector('h2');
                         const p = article.querySelector('p');
                         const buttons = article.querySelectorAll('button');
-    
+            
                         if (img) {
-                            img.src = product.img;
-                            img.alt = product.name || 'Product Image';
+                            img.src = product.img; // Set product image
+                            img.alt = product.name || 'Product Image'; // Set alt text
                         }
-                        if (h2) h2.textContent = product.name || 'Product Name';
-                        if (p) p.textContent = `$${product.price || '00.00'}`;
+                        if (h2) h2.textContent = product.name || 'Product Name'; // Set product name
+                        if (p) p.textContent = `$${product.price.toFixed(2)}`; // Set product price, formatted to 2 decimal places
                         buttons.forEach(button => {
-                            button.onclick = () => window.location.href = `product?id=${product.id}`;
+                            button.onclick = () => window.location.href = `product?id=${productId}`; // Set button action
                         });
-    
+            
                         if (!product.hot) {
                             const h1 = article.querySelector('h1');
-                            if (h1) article.removeChild(h1);
+                            if (h1) article.removeChild(h1); // Remove "Hot Deal" if not a hot deal
                         } else {
-                            if (p) p.textContent = `🔥 ${p.textContent}`;
+                            if (p) p.textContent = `🔥 $${product.price.toFixed(2)}`; // Add fire emoji if it's a hot deal
                         }
+                    } else {
+                        console.warn(`No product found with ID: ${productId}`); // Log warning if product not found
                     }
                 });
+            } else {
+                console.error('Products data is not in the expected format.');
             }
         });
     </script>
