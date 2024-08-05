@@ -88,6 +88,21 @@
     </footer>
 
     <script>
+        async function fetchProducts() {
+            try {
+                const response = await fetch("/netlify/functions/products.js");
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                return data
+            } catch (error) {
+                console.error('There was a problem with the fetch operation:', error);
+            }
+        }
+
+        const products = fetchProducts();
+
         document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('article.product').forEach(article => {
                 const product = products.find(p => p.id === article.id);
