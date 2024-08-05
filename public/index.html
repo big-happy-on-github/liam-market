@@ -90,43 +90,44 @@
     <script>
         async function fetchProducts() {
             try {
-                const response = await fetch("https://github.com/big-happy-on-github/liam-market/blob/d34f105300c752c162ab7f30f092d12328caabf5/netlify/functions/products.js");
+                const response = await fetch("https://api.example.com/products"); // Update URL to the correct endpoint
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                const data = await response.json();
-                return data
+                return await response.json();
             } catch (error) {
                 console.error('There was a problem with the fetch operation:', error);
             }
         }
 
-        const products = fetchProducts();
+        document.addEventListener('DOMContentLoaded', async () => {
+            const products = await fetchProducts();
 
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('article.product').forEach(article => {
-                const product = products.find(p => p.id === article.id);
-        
-                if (product) {
-                    const img = article.querySelector('img');
-                    const h2 = article.querySelector('h2');
-                    const p = article.querySelector('p');
-                    const button = article.querySelector('button');
-        
-                    if (img) img.src = product.img;
-                    if (img) img.alt = product.name;
-                    if (h2) h2.textContent = product.name;
-                    if (p) p.textContent = product.price;
-                    if (button) button.onclick = () => window.location.href = `product?id=${article.id}`;
-        
-                    if (!product.hot) {
-                        const h1 = article.querySelector('h1');
-                        if (h1) article.removeChild(h1);
-                    } else {
-                        if (p) p.textContent = `🔥${p.textContent}`;
+            if (products) {
+                document.querySelectorAll('article.product').forEach(article => {
+                    const product = products.find(p => p.id === article.id);
+
+                    if (product) {
+                        const img = article.querySelector('img');
+                        const h2 = article.querySelector('h2');
+                        const p = article.querySelector('p');
+                        const button = article.querySelector('button');
+
+                        if (img) img.src = product.img;
+                        if (img) img.alt = product.name;
+                        if (h2) h2.textContent = product.name;
+                        if (p) p.textContent = `$${product.price}`;
+                        if (button) button.onclick = () => window.location.href = `product?id=${article.id}`;
+
+                        if (!product.hot) {
+                            const h1 = article.querySelector('h1');
+                            if (h1) article.removeChild(h1);
+                        } else {
+                            if (p) p.textContent = `🔥${p.textContent}`;
+                        }
                     }
-                }
-            });
+                });
+            }
         });
     </script>
 </body>
