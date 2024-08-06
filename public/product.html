@@ -161,7 +161,12 @@
             } else {
                 console.error('Products data is not in the expected format.');
             }
+            document.getElementById("product-quantity").value = 1;
         });
+
+        if (parseInt(document.getElementById("product-quantity").value) < 1) {
+            document.getElementById("product-quantity").value = 1;
+        }
     </script>
 </body>
 </html>
