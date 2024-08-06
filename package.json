@@ -1,7 +1,7 @@
 {
-    "name": "netlify-example-hello-functions",
-    "version": "1.0.0",
-    "description": "A site to show a hello world example of using Netlify Functions",
-    "author": "Netlify",
-    "license": "ISC"
+    "name": "liam-market",
+    "version": "alpha",
+    "description": "An online market run by liam",
+    "author": "Liam",
+    "license": "All Rights Reserved"
 }
