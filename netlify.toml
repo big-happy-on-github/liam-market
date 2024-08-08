@@ -1,10 +1,10 @@
 [build]
-    publish = ".well-known"
+    publish = "public"
     command = "echo No build command"
     node_bundler = "esbuild"
 
 [dev]
-    publish = ".well-known"
+    publish = "public"
     node_bundler = "esbuild"
 
 [[redirects]]
