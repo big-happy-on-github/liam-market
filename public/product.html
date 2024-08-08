@@ -102,11 +102,10 @@
         async function fetchProducts() {
             try {
                 const response = await fetch('/.netlify/functions/products', {
-                    method: 'POST',
+                    method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ none: true })
+                    }
                 });
                 if (!response.ok) throw new Error('Network response was not ok.');
                 const data = await response.json();
@@ -121,11 +120,10 @@
         async function fetchDiscounts() {
             try {
                 const response = await fetch('/.netlify/functions/discounts', {
-                    method: 'POST',
+                    method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ none: true })
+                    }
                 });
                 if (!response.ok) throw new Error('Network response was not ok.');
                 const data = await response.json();
