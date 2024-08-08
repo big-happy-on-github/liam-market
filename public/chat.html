@@ -23,7 +23,7 @@
     <main>
         <section id="chat-log" class="product-container">
             <input id="chat-input">
-            <button onclick="POSTChatLogs(document.getElementById('chat-input').value)">send</button>
+            <button onclick="button()">send</button>
         </section>
     </main>
 
@@ -85,14 +85,14 @@
 
         document.addEventListener('DOMContentLoaded', loadChatLogs);
 
-        document.getElementById('send-button').addEventListener('click', () => {
+        function button() {
             const chatInput = document.getElementById('chat-input');
             const message = chatInput.value.trim();
             if (message) {
                 POSTChatLogs(message);
                 chatInput.value = ''; // Clear input after sending
             }
-        });
+        }
     </script>
 </body>
 </html>
