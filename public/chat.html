@@ -6,6 +6,13 @@
     <title>Liam's marketplace / food&drink</title>
     <link rel="icon" href="https://static.wikia.nocookie.net/a6357f3f-fc19-4295-84b6-b7fe99ca0b74/scale-to-width/755" type="image/x-icon">
     <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* Add this to your css/styles.css */
+        p {
+            margin: 0 0 10px 0; /* Adjust the margin as needed */
+            padding: 0;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -31,24 +38,27 @@
     </footer>
 
         <script>
-        async function GETChatLogs() {
+       async function GETChatLogs() {
             const options = {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
                 }
             };
-
+        
             try {
                 const response = await fetch('/.netlify/functions/chat', options);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                return await response.json();
+                const data = await response.json();
+                console.log('Chat logs:', data); // Log the data to verify its structure
+                return data;
             } catch (error) {
                 console.error('There was a problem with the fetch operation:', error);
             }
         }
+
 
         async function POSTChatLogs(addition) {
             const options = {
@@ -77,7 +87,12 @@
             chatLogElement.innerHTML = ''; // Clear existing messages
             chatLog.forEach(message => {
                 const p = document.createElement("p");
-                p.textContent = message;
+                // Check if message is an object and has a 'text' property
+                if (typeof message === 'object' && message.text) {
+                    p.textContent = message.text;
+                } else {
+                    p.textContent = message; // Fallback if message is not an object
+                }
                 chatLogElement.appendChild(p);
             });
         }
