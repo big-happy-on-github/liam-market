@@ -21,9 +21,10 @@
     </header>
 
     <main>
-        <section id="chat-log" class="product-container"></section>
-        <input id="chat-input">
-        <button onclick="POSTChatLogs(document.getElementById('chat-input').value)">send</button>
+        <section id="chat-log" class="product-container">
+            <input id="chat-input">
+            <button onclick="POSTChatLogs(document.getElementById('chat-input').value)">send</button>
+        </section>
     </main>
 
     <footer>
@@ -68,7 +69,7 @@
                 }
                 const data = await response.json();
                 console.log(data);
-                window.location.reload();
+                reload();
             } catch (error) {
                 console.error('There was a problem with the fetch operation:', error);
             }
