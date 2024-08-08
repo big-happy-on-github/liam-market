@@ -78,9 +78,10 @@
         document.addEventListener('DOMContentLoaded', async () => {
             const chatLog = await GETChatLogs();
             for (message in chatLog) {
-              let p = document.createElement("p");
-              p.textContent = message;
-              document.getElementById("chat-log").appendChild(p); 
+                let p = document.createElement("p");
+                p.textContent = message;
+                document.getElementById("chat-log").appendChild(p);
+                document.getElementById("chat-log").appendChild(document.createElement("br"));
             }
         });
     </script>
