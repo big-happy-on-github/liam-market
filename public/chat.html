@@ -21,10 +21,9 @@
     </header>
 
     <main>
-        <section id="chat-log" class="product-container">
-            <input id="chat-input">
-            <button onclick="button()">send</button>
-        </section>
+        <section id="chat-log" class="product-container"></section>
+        <input id="chat-input">
+        <button onclick="button()">send</button>
     </main>
 
     <footer>
@@ -80,6 +79,7 @@
                 const p = document.createElement("p");
                 p.textContent = message;
                 chatLogElement.appendChild(p);
+                chatLogElement.appendChild(document.createElement("br"));
             });
         }
 
