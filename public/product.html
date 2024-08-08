@@ -159,7 +159,7 @@
                             img.alt = product.name || 'Product Image'; // Set alt text
                         }
                         if (h2) h2.textContent = product.name || 'Product Name'; // Set product name
-                        document.title = document.title+product.name
+                        document.title = document.title+" "+product.name
                         if (p) p.textContent = `$${product.price.toFixed(2)}`; // Set product price, formatted to 2 decimal places
                         buttons.forEach(button => {
                             button.onclick = () => window.location.href = `product?id=${productID}`; // Set button action
