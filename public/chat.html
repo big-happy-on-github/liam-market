@@ -30,7 +30,7 @@
         <marquee>&copy; 2024 Liam's Marketplace</marquee>
     </footer>
 
-    <script>
+        <script>
         async function GETChatLogs() {
             const options = {
                 method: 'GET',
@@ -84,7 +84,7 @@
 
         document.addEventListener('DOMContentLoaded', loadChatLogs);
 
-        function button() {
+        function sendMessage() {
             const chatInput = document.getElementById('chat-input');
             const message = chatInput.value.trim();
             if (message) {
@@ -92,6 +92,8 @@
                 chatInput.value = ''; // Clear input after sending
             }
         }
+
+        document.getElementById('send-button').addEventListener('click', sendMessage);
     </script>
 </body>
 </html>
