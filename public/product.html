@@ -6,6 +6,7 @@
     <title>Liam's marketplace / </title>
     <link rel="icon" href="https://static.wikia.nocookie.net/a6357f3f-fc19-4295-84b6-b7fe99ca0b74/scale-to-width/755" type="image/x-icon">
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://applepay.cdn-apple.com/jsapi/1/latest/apple-pay-sdk.css">
     <script async crossorigin
         src="https://applepay.cdn-apple.com/jsapi/1.latest/apple-pay-sdk.js"
     ></script>
@@ -69,6 +70,12 @@
     </style>
     <style>
         .apple-pay-button {
+            display: inline-block;
+            width: 100%; /* Adjust width as needed */
+            height: auto;
+        }
+
+        /*.apple-pay-button {
             -webkit-appearance: -apple-pay-button;
             appearance: -apple-pay-button;
             background: #000;
@@ -79,6 +86,14 @@
             padding: 0.75rem 1.5rem;
             cursor: pointer;
             display: inline-block;
+            text-align: center;
+        }*/
+        .apple-pay-button {
+            background: #000;
+            color: #fff;
+            border-radius: 4px;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
             text-align: center;
         }
     </style>
