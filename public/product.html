@@ -211,20 +211,19 @@
                                 };
                 
                                 applePayButton.addEventListener('click', () => {
-                                    // Fetch the discounts once and store them in a variable
-                                    const discounts = fetchDiscounts();
                                     let discountIsReal = false;
-                                    
+                        
                                     // Check the product quantity
                                     if (parseInt(document.getElementById("product-quantity").value) < 1) {
-                                        alert("can't order <1 products");
+                                        alert("Can't order less than 1 product");
                                         return;
                                     } 
                                     
                                     // Validate the discount code and apply it if valid
+                                    const discountCode = document.getElementById("product-discount-code").value;
                                     for (let discount in discounts) {
-                                        if (document.getElementById("product-discount").value == discount && document.getElementById("product-discount").value != "") {
-                                            paymentRequest.total.amount = paymentRequest.total.amount * (1 - discounts[discount] / 100);
+                                        if (discountCode === discount) {
+                                            paymentRequest.total.amount = (paymentRequest.total.amount * (1 - discounts[discount] / 100)).toFixed(2);
                                             discountIsReal = true;
                                             break;
                                         }
@@ -232,10 +231,10 @@
                                     
                                     // Alert if the discount code is not valid
                                     if (!discountIsReal) {
-                                        alert("that's not a real code buddy");
+                                        alert("That's not a real code buddy");
                                         return;
                                     }
-
+            
                                     const session = new ApplePaySession(1, paymentRequest);
                 
                                     session.onvalidatemerchant = (event) => {
