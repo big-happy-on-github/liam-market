@@ -152,61 +152,6 @@
                 return {}; // Return empty object if error occurs
             }
         }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            if (window.ApplePaySession) {
-                const applePayButton = document.getElementById('apple-pay-button');
-                if (applePayButton) {
-                    applePayButton.style.display = 'block'; // Show the button
-    
-                    applePayButton.addEventListener('click', () => {
-                        const paymentRequest = {
-                            countryCode: 'US',
-                            currencyCode: 'USD',
-                            supportedNetworks: ['visa', 'masterCard', 'amex'],
-                            merchantCapabilities: ['supports3DS'],
-                            total: {
-                                label: 'Total',
-                                amount: '10.00' // Replace with the actual amount
-                            }
-                        };
-    
-                        const session = new ApplePaySession(1, paymentRequest);
-    
-                        session.onvalidatemerchant = (event) => {
-                            // Call your server to get a merchant session
-                            fetch('/your-server-endpoint', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify({
-                                    validationUrl: event.validationURL
-                                })
-                            }).then(response => response.json())
-                              .then(merchantSession => session.completeMerchantValidation(merchantSession))
-                              .catch(err => {
-                                  console.error('Merchant validation failed:', err);
-                                  session.abort();
-                              });
-                        };
-    
-                        session.onpaymentauthorized = (event) => {
-                            // Handle the payment here
-                            session.completePayment(ApplePaySession.STATUS_SUCCESS);
-                        };
-    
-                        session.oncancel = () => {
-                            console.log('Payment cancelled');
-                        };
-    
-                        session.begin();
-                    });
-                }
-            } else {
-                console.log('Apple Pay is not supported on this device');
-            }
-        });
         
         document.addEventListener('DOMContentLoaded', async () => {
             const products = await fetchProducts();
@@ -245,6 +190,59 @@
                             } else {
                                 if (p) p.textContent = `🔥 $${product.price.toFixed(2)}`; // Add fire emoji if it's a hot deal
                             }
+                        }
+
+                        if (window.ApplePaySession) {
+                            const applePayButton = document.getElementById('apple-pay-button');
+                            if (applePayButton) {
+                                applePayButton.style.display = 'block'; // Show the button
+                
+                                applePayButton.addEventListener('click', () => {
+                                    const paymentRequest = {
+                                        countryCode: 'US',
+                                        currencyCode: 'USD',
+                                        supportedNetworks: ['visa', 'masterCard', 'amex'],
+                                        merchantCapabilities: ['supports3DS'],
+                                        total: {
+                                            label: 'Total',
+                                            amount: `${product.price}`
+                                        }
+                                    };
+                
+                                    const session = new ApplePaySession(1, paymentRequest);
+                
+                                    session.onvalidatemerchant = (event) => {
+                                        // Call your server to get a merchant session
+                                        fetch('https://apple-pay-gateway.apple.com/paymentservices/paymentSession', {
+                                            method: 'POST',
+                                            headers: {
+                                                'Content-Type': 'application/json'
+                                            },
+                                            body: JSON.stringify({
+                                                validationUrl: event.validationURL
+                                            })
+                                        }).then(response => response.json())
+                                          .then(merchantSession => session.completeMerchantValidation(merchantSession))
+                                          .catch(err => {
+                                              console.error('Merchant validation failed:', err);
+                                              session.abort();
+                                          });
+                                    };
+                
+                                    session.onpaymentauthorized = (event) => {
+                                        // Handle the payment here
+                                        session.completePayment(ApplePaySession.STATUS_SUCCESS);
+                                    };
+                
+                                    session.oncancel = () => {
+                                        console.log('Payment cancelled');
+                                    };
+                
+                                    session.begin();
+                                });
+                            }
+                        } else {
+                            console.log('Apple Pay is not supported on this device');
                         }
                     } else {
                         console.warn(`No product found with ID: ${productID}`); // Log warning if product not found
