@@ -31,10 +31,10 @@
             <article class="product">
                 <h2>send feedback below</h2>
                 <p>-</p>
-                <label for="feedback-input">feedback</label>
+                <label for="feedback-input">feedback<a style="color:#A52A2A;">*</a></label>
                 <input id="feedback-input">
                 <p>-</p>
-                <label for="email">email (optional)</label>
+                <label for="email">email<a style="color:#A52A2A;">*</a></label>
                 <input id="email">
                 <p>-</p>
                 <button onclick="sendFeedback()">send</button>
@@ -43,7 +43,7 @@
     </main>
 
     <footer>
-        <marquee>&copy; 2024 Liam's Marketplace</marquee>
+        <marquee>&copy; 2024 Liam's Marketplace <a onclick="specialFeedback()">🫠</a></marquee>
     </footer>
 
     <script>
@@ -66,13 +66,18 @@
         }
         
         async function POSTfeedback(feedback, email) {
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) {
+                alert("not real email");
+                return
+            }
             try {
                 const response = await fetch('/.netlify/functions/feedback', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ feedback, email })
+                    body: JSON.stringify({ feedback: feedback, email: email })
                 });
                 
                 if (!response.ok) throw new Error('Network response was not ok.');
@@ -89,6 +94,15 @@
             const feedback = document.getElementById('feedback-input').value;
             const email = document.getElementById('email').value;
             POSTfeedback(feedback, email);
+        }
+
+        function specialFeedback() {
+            const checkEmail = prompt("user email");
+            for (let group in GETfeedback()) {
+                if (checkEmail == group.email) {
+                    console.log(group);
+                }
+            }
         }
 
         GETfeedback();
