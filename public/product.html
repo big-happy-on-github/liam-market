@@ -198,18 +198,29 @@
                             const applePayButton = document.getElementById('apple-pay-button');
                             if (applePayButton) {
                                 applePayButton.style.display = 'block'; // Show the button
+
+                                let paymentRequest = {
+                                    countryCode: 'US',
+                                    currencyCode: 'USD',
+                                    supportedNetworks: ['visa', 'masterCard', 'amex'],
+                                    merchantCapabilities: ['supports3DS'],
+                                    total: {
+                                        label: `${product.name}`,
+                                        amount: `${product.price}`
+                                    }
+                                };
                 
                                 applePayButton.addEventListener('click', () => {
-                                    const paymentRequest = {
-                                        countryCode: 'US',
-                                        currencyCode: 'USD',
-                                        supportedNetworks: ['visa', 'masterCard', 'amex'],
-                                        merchantCapabilities: ['supports3DS'],
-                                        total: {
-                                            label: `${product.name}`,
-                                            amount: `${product.price}`
+                                    if (parseInt(document.getElementById("product-quantity").value)<1) {
+                                        alert("you can't order <1 products");
+                                        return;
+                                    } else {
+                                        for (let discount in fetchDiscounts()) {
+                                            if (document.getElementById("product-discount").value == discount) {
+                                                paymentRequest.total.amount = paymentRequest.total.amount/discount*100;
+                                            }
                                         }
-                                    };
+                                    }
                 
                                     const session = new ApplePaySession(1, paymentRequest);
                 
