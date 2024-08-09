@@ -105,8 +105,10 @@
                 <input id="product-quantity" type="number" placeholder="quantity">
                 <input id="product-discount-code" placeholder="discount code">
                 <p>-</p>
-                <button id="apple-pay-button" class="apple-pay-button"></button>
-                <p>or</p>
+                <div id="apple">
+                    <button id="apple-pay-button" class="apple-pay-button"></button>
+                    <p>or</p>
+                </div>
                 <button id="credit-buy-button">Credit Card</button>
             </article>
         </section>
@@ -243,6 +245,7 @@
                             }
                         } else {
                             console.log('Apple Pay is not supported on this device');
+                            document.getElementById("apple").style.display = "none";
                         }
                     } else {
                         console.warn(`No product found with ID: ${productID}`); // Log warning if product not found
