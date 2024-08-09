@@ -8,8 +8,6 @@
     <link rel="stylesheet" href="css/styles.css">
     <style>
         .product {
-            display: fixed;
-            top: 50%;
             height: 10%;
         }
     </style>
@@ -31,8 +29,12 @@
     <main>
         <section class="product-container">
             <article class="product">
+                <h2>send feedback below</h2>
+                <label for="feedback-input">feedback</label>
                 <input id="feedback-input">
-                <button onclick="POSTfeedback(document.getElementById('feedback-input').value)">send</button>
+                <label for="email">email (optional)</label>
+                <input id="email">
+                <button onclick="POSTfeedback([document.getElementById('feedback-input').value,document.getElementById('email').value])">send</button>
             </article>
         </section>
     </main>
@@ -60,15 +62,26 @@
             }
         }
         
-        async function POSTfeedback(feedback) {
+        async function POSTfeedback(feedback, email) {
             try {
-                const response = await fetch('/.netlify/functions/feedback', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(feedback)
-                });
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (emailPattern.test(email)) {
+                    const response = await fetch('/.netlify/functions/feedback', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ feedback: feedback, email: email })
+                    });
+                } else {
+                    const response = await fetch('/.netlify/functions/feedback', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ feedback: feedback })
+                    });
+                }
                 if (!response.ok) throw new Error('Network response was not ok.');
                 const data = await response.json();
                 console.log(data); // Ensure data is in the correct format
