@@ -67,6 +67,21 @@
             to { transform: translateX(-100%); }
         }
     </style>
+    <style>
+        .apple-pay-button {
+            -webkit-appearance: -apple-pay-button;
+            appearance: -apple-pay-button;
+            background: #000;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 1rem;
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            display: inline-block;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -91,7 +106,7 @@
                 <input id="product-discount-code" placeholder="discount code">
                 <p>-</p>
                 <div id="apple">
-                    <button id="apple-pay-button" class="apple-pay-button">Apple Pay</button>
+                    <button id="apple-pay-button" class="apple-pay-button"></button>
                     <p>or</p>
                 </div>
                 <button id="credit-buy-button">Credit Card</button>
@@ -165,7 +180,7 @@
                         document.title = document.title+" "+product.name
                         if (p) p.textContent = `$${product.price.toFixed(2)}`; // Set product price, formatted to 2 decimal places
                         buttons.forEach(button => {
-                            //button.onclick = () => window.location.href = `product?id=${productID}`; // Set button action
+                            button.onclick = () => window.location.href = `product?id=${productID}`; // Set button action
                         });
             
                         if (!product.hot && !product.food) {
@@ -185,15 +200,6 @@
                                 applePayButton.style.display = 'block'; // Show the button
                 
                                 applePayButton.addEventListener('click', () => {
-                                    const discountCode = document.getElementById('product-discount-code').value;
-                                    let finalPrice = product.price;
-                                    for (let discount in fetchDiscounts()) {
-                                        if (discountCode == discount) {
-                                            finalPrice = finalPrice/discount.percent*100;
-                                            break;
-                                        }
-                                    }
-
                                     const paymentRequest = {
                                         countryCode: 'US',
                                         currencyCode: 'USD',
@@ -201,21 +207,8 @@
                                         merchantCapabilities: ['supports3DS'],
                                         total: {
                                             label: 'Total',
-                                            amount: finalPrice
-                                        },
-                                        // Adding shipping options
-                                        shippingMethods: [
-                                            {
-                                                label: 'USPS',
-                                                amount: '5.00',
-                                                identifier: 'standard'
-                                            },
-                                            {
-                                                label: 'FedEx',
-                                                amount: '15.00',
-                                                identifier: 'express'
-                                            }
-                                        ]
+                                            amount: `${product.price}`
+                                        }
                                     };
                 
                                     const session = new ApplePaySession(1, paymentRequest);
@@ -263,6 +256,7 @@
             }
             document.getElementById("product-quantity").value = 1;
         });
+        fetchDiscounts();
     </script>
 </body>
 </html>
