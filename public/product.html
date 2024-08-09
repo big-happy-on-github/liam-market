@@ -70,12 +70,6 @@
     </style>
     <style>
         .apple-pay-button {
-            display: inline-block;
-            width: 100%; /* Adjust width as needed */
-            height: auto;
-        }
-
-        /*.apple-pay-button {
             -webkit-appearance: -apple-pay-button;
             appearance: -apple-pay-button;
             background: #000;
@@ -87,14 +81,14 @@
             cursor: pointer;
             display: inline-block;
             text-align: center;
-        }*/
-        .apple-pay-button {
-            background: #000;
-            color: #fff;
-            border-radius: 4px;
-            padding: 0.75rem 1.5rem;
-            font-size: 1rem;
-            text-align: center;
+        }
+
+        apple-pay-button {
+          --apple-pay-button-width: 150px;
+          --apple-pay-button-height: 30px;
+          --apple-pay-button-border-radius: 3px;
+          --apple-pay-button-padding: 0px 0px;
+          --apple-pay-button-box-sizing: border-box;
         }
     </style>
 </head>
@@ -121,6 +115,7 @@
                 <input id="product-discount-code" placeholder="discount code">
                 <p>-</p>
                 <div id="apple">
+                    <apple-pay-button buttonstyle="black" type="check-out" locale="en-US"></apple-pay-button>
                     <button id="apple-pay-button" class="apple-pay-button"></button>
                     <p>or</p>
                 </div>
