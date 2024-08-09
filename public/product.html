@@ -185,6 +185,15 @@
                                 applePayButton.style.display = 'block'; // Show the button
                 
                                 applePayButton.addEventListener('click', () => {
+                                    const discountCode = document.getElementById('product-discount-code').value;
+                                    let finalPrice = product.price;
+                                    for (let discount in fetchDiscounts()) {
+                                        if (discountCode == discount) {
+                                            finalPrice = finalPrice/discount.percent*100;
+                                            break;
+                                        }
+                                    }
+
                                     const paymentRequest = {
                                         countryCode: 'US',
                                         currencyCode: 'USD',
@@ -192,8 +201,21 @@
                                         merchantCapabilities: ['supports3DS'],
                                         total: {
                                             label: 'Total',
-                                            amount: `${product.price}`
-                                        }
+                                            amount: finalPrice
+                                        },
+                                        // Adding shipping options
+                                        shippingMethods: [
+                                            {
+                                                label: 'USPS',
+                                                amount: '5.00',
+                                                identifier: 'standard'
+                                            },
+                                            {
+                                                label: 'FedEx',
+                                                amount: '15.00',
+                                                identifier: 'express'
+                                            }
+                                        ]
                                     };
                 
                                     const session = new ApplePaySession(1, paymentRequest);
@@ -241,7 +263,6 @@
             }
             document.getElementById("product-quantity").value = 1;
         });
-        fetchDiscounts();
     </script>
 </body>
 </html>
