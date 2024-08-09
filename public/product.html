@@ -67,52 +67,6 @@
             to { transform: translateX(-100%); }
         }
     </style>
-    <style>
-        @supports (-webkit-appearance: -apple-pay-button) { 
-            .apple-pay-button {
-                display: inline-block;
-                -webkit-appearance: -apple-pay-button;
-            }
-            .apple-pay-button-black {
-                -apple-pay-button-style: black;
-            }
-            .apple-pay-button-white {
-                -apple-pay-button-style: white;
-            }
-            .apple-pay-button-white-with-line {
-                -apple-pay-button-style: white-outline;
-            }
-        }
-        
-        
-        @supports not (-webkit-appearance: -apple-pay-button) {
-            .apple-pay-button {
-                display: inline-block;
-                background-size: 100% 60%;
-                background-repeat: no-repeat;
-                background-position: 50% 50%;
-                border-radius: 5px;
-                padding: 0px;
-                box-sizing: border-box;
-                min-width: 200px;
-                min-height: 32px;
-                max-height: 64px;
-            }
-            .apple-pay-button-black {
-                background-image: -webkit-named-image(apple-pay-logo-white);
-                background-color: black;
-            }
-            .apple-pay-button-white {
-                background-image: -webkit-named-image(apple-pay-logo-black);
-                background-color: white;
-            }
-            .apple-pay-button-white-with-line {
-                background-image: -webkit-named-image(apple-pay-logo-black);
-                background-color: white;
-                border: .5px solid black;
-            } 
-        }
-    </style>
 </head>
 <body>
     <header>
@@ -137,8 +91,7 @@
                 <input id="product-discount-code" placeholder="discount code">
                 <p>-</p>
                 <div id="apple">
-                    <div class="apple-pay-button apple-pay-button-white"></div>
-                    <!--<button id="apple-pay-button" class="apple-pay-button"></button>-->
+                    <button id="apple-pay-button" class="apple-pay-button">Apple Pay</button>
                     <p>or</p>
                 </div>
                 <button id="credit-buy-button">Credit Card</button>
