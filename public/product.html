@@ -211,22 +211,31 @@
                                 };
                 
                                 applePayButton.addEventListener('click', () => {
-                                    if (parseInt(document.getElementById("product-quantity").value)<1) {
-                                        alert("you can't order <1 products");
+                                    // Fetch the discounts once and store them in a variable
+                                    const discounts = fetchDiscounts();
+                                    let discountIsReal = false;
+                                    
+                                    // Check the product quantity
+                                    if (parseInt(document.getElementById("product-quantity").value) < 1) {
+                                        alert("can't order <1 products");
                                         return;
-                                    } else {
-                                        for (let discount in fetchDiscounts()) {
-                                            if (document.getElementById("product-discount").value == discount) {
-                                                paymentRequest.total.amount = paymentRequest.total.amount/discount*100;
-                                                const discountIsReal;
-                                                break;
-                                            }
-                                        } if (!discountIsReal) {
-                                            alert("that's not a real discount code...");
-                                            return;
+                                    } 
+                                    
+                                    // Validate the discount code and apply it if valid
+                                    for (let discount in discounts) {
+                                        if (document.getElementById("product-discount").value == discount) {
+                                            paymentRequest.total.amount = paymentRequest.total.amount * (1 - discounts[discount] / 100);
+                                            discountIsReal = true;
+                                            break;
                                         }
                                     }
-                
+                                    
+                                    // Alert if the discount code is not valid
+                                    if (!discountIsReal) {
+                                        alert("that's not a real code buddy");
+                                        return;
+                                    }
+
                                     const session = new ApplePaySession(1, paymentRequest);
                 
                                     session.onvalidatemerchant = (event) => {
