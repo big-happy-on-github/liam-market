@@ -67,6 +67,14 @@
         
         async function POSTfeedback(feedback, email) {
             try {
+                const response = await fetch('/.netlify/functions/feedback', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ feedback: feedback })
+                });
+                
                 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 if (emailPattern.test(email)) {
                     const response = await fetch('/.netlify/functions/feedback', {
@@ -75,14 +83,6 @@
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({ feedback: feedback, email: email })
-                    });
-                } else {
-                    const response = await fetch('/.netlify/functions/feedback', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ feedback: feedback })
                     });
                 }
                 if (!response.ok) throw new Error('Network response was not ok.');
