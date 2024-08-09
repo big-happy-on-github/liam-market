@@ -69,26 +69,49 @@
         }
     </style>
     <style>
-        .apple-pay-button {
-            -webkit-appearance: -apple-pay-button;
-            appearance: -apple-pay-button;
-            background: #000;
-            border: none;
-            border-radius: 4px;
-            color: #fff;
-            font-size: 1rem;
-            padding: 0.75rem 1.5rem;
-            cursor: pointer;
-            display: inline-block;
-            text-align: center;
+        @supports (-webkit-appearance: -apple-pay-button) { 
+            .apple-pay-button {
+                display: inline-block;
+                -webkit-appearance: -apple-pay-button;
+            }
+            .apple-pay-button-black {
+                -apple-pay-button-style: black;
+            }
+            .apple-pay-button-white {
+                -apple-pay-button-style: white;
+            }
+            .apple-pay-button-white-with-line {
+                -apple-pay-button-style: white-outline;
+            }
         }
-
-        apple-pay-button {
-          --apple-pay-button-width: 150px;
-          --apple-pay-button-height: 30px;
-          --apple-pay-button-border-radius: 3px;
-          --apple-pay-button-padding: 0px 0px;
-          --apple-pay-button-box-sizing: border-box;
+        
+        
+        @supports not (-webkit-appearance: -apple-pay-button) {
+            .apple-pay-button {
+                display: inline-block;
+                background-size: 100% 60%;
+                background-repeat: no-repeat;
+                background-position: 50% 50%;
+                border-radius: 5px;
+                padding: 0px;
+                box-sizing: border-box;
+                min-width: 200px;
+                min-height: 32px;
+                max-height: 64px;
+            }
+            .apple-pay-button-black {
+                background-image: -webkit-named-image(apple-pay-logo-white);
+                background-color: black;
+            }
+            .apple-pay-button-white {
+                background-image: -webkit-named-image(apple-pay-logo-black);
+                background-color: white;
+            }
+            .apple-pay-button-white-with-line {
+                background-image: -webkit-named-image(apple-pay-logo-black);
+                background-color: white;
+                border: .5px solid black;
+            } 
         }
     </style>
 </head>
@@ -115,7 +138,7 @@
                 <input id="product-discount-code" placeholder="discount code">
                 <p>-</p>
                 <div id="apple">
-                    <apple-pay-button buttonstyle="black" type="check-out" locale="en-US"></apple-pay-button>
+                    <div class="apple-pay-button apple-pay-button-white"></div>
                     <button id="apple-pay-button" class="apple-pay-button"></button>
                     <p>or</p>
                 </div>
