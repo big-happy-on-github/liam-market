@@ -211,29 +211,11 @@
                                 };
                 
                                 applePayButton.addEventListener('click', () => {
-                                    let discountIsReal = false;
-                        
                                     // Check the product quantity
                                     if (parseInt(document.getElementById("product-quantity").value) < 1) {
-                                        alert("Can't order less than 1 product");
+                                        alert("<1 product isn't possible...");
                                         return;
                                     } 
-                                    
-                                    // Validate the discount code and apply it if valid
-                                    const discountCode = document.getElementById("product-discount-code").value;
-                                    for (let discount in discounts) {
-                                        if (discountCode === discount) {
-                                            paymentRequest.total.amount = (paymentRequest.total.amount * (1 - discounts[discount] / 100)).toFixed(2);
-                                            discountIsReal = true;
-                                            break;
-                                        }
-                                    }
-                                    
-                                    // Alert if the discount code is not valid
-                                    if (!discountIsReal) {
-                                        alert("That's not a real code buddy");
-                                        return;
-                                    }
             
                                     const session = new ApplePaySession(1, paymentRequest);
                 
