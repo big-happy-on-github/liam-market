@@ -218,7 +218,12 @@
                                         for (let discount in fetchDiscounts()) {
                                             if (document.getElementById("product-discount").value == discount) {
                                                 paymentRequest.total.amount = paymentRequest.total.amount/discount*100;
+                                                const discountIsReal;
+                                                break;
                                             }
+                                        } if (!discountIsReal) {
+                                            alert("that's not a real discount code...");
+                                            return;
                                         }
                                     }
                 
