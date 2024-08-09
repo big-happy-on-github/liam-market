@@ -66,13 +66,20 @@
             from { transform: translateX(100%); }
             to { transform: translateX(-100%); }
         }
-
-        apple-pay-button {
-          --apple-pay-button-width: 150px;
-          --apple-pay-button-height: 30px;
-          --apple-pay-button-border-radius: 3px;
-          --apple-pay-button-padding: 0px 0px;
-          --apple-pay-button-box-sizing: border-box;
+    </style>
+    <style>
+        .apple-pay-button {
+            -webkit-appearance: -apple-pay-button;
+            appearance: -apple-pay-button;
+            background: #000;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 1rem;
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            display: inline-block;
+            text-align: center;
         }
     </style>
 </head>
@@ -98,7 +105,7 @@
                 <input id="product-quantity" type="number" placeholder="quantity">
                 <input id="product-discount-code" placeholder="discount code">
                 <p>-</p>
-                <apple-pay-button buttonstyle="black" type="buy" locale="en-US"></apple-pay-button>
+                <button id="apple-pay-button" class="apple-pay-button"></button>
                 <p>or</p>
                 <button id="credit-buy-button">Credit Card</button>
             </article>
@@ -145,6 +152,61 @@
                 return {}; // Return empty object if error occurs
             }
         }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.ApplePaySession) {
+                const applePayButton = document.getElementById('apple-pay-button');
+                if (applePayButton) {
+                    applePayButton.style.display = 'block'; // Show the button
+    
+                    applePayButton.addEventListener('click', () => {
+                        const paymentRequest = {
+                            countryCode: 'US',
+                            currencyCode: 'USD',
+                            supportedNetworks: ['visa', 'masterCard', 'amex'],
+                            merchantCapabilities: ['supports3DS'],
+                            total: {
+                                label: 'Total',
+                                amount: '10.00' // Replace with the actual amount
+                            }
+                        };
+    
+                        const session = new ApplePaySession(1, paymentRequest);
+    
+                        session.onvalidatemerchant = (event) => {
+                            // Call your server to get a merchant session
+                            fetch('/your-server-endpoint', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    validationUrl: event.validationURL
+                                })
+                            }).then(response => response.json())
+                              .then(merchantSession => session.completeMerchantValidation(merchantSession))
+                              .catch(err => {
+                                  console.error('Merchant validation failed:', err);
+                                  session.abort();
+                              });
+                        };
+    
+                        session.onpaymentauthorized = (event) => {
+                            // Handle the payment here
+                            session.completePayment(ApplePaySession.STATUS_SUCCESS);
+                        };
+    
+                        session.oncancel = () => {
+                            console.log('Payment cancelled');
+                        };
+    
+                        session.begin();
+                    });
+                }
+            } else {
+                console.log('Apple Pay is not supported on this device');
+            }
+        });
         
         document.addEventListener('DOMContentLoaded', async () => {
             const products = await fetchProducts();
