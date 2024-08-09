@@ -223,7 +223,7 @@
                                     
                                     // Validate the discount code and apply it if valid
                                     for (let discount in discounts) {
-                                        if (document.getElementById("product-discount").value == discount) {
+                                        if (document.getElementById("product-discount").value == discount && document.getElementById("product-discount").value != "") {
                                             paymentRequest.total.amount = paymentRequest.total.amount * (1 - discounts[discount] / 100);
                                             discountIsReal = true;
                                             break;
