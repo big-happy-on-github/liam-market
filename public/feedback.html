@@ -1,1 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liam's marketplace / feedback</title>
+    <link rel="icon" href="https://static.wikia.nocookie.net/a6357f3f-fc19-4295-84b6-b7fe99ca0b74/scale-to-width/755" type="image/x-icon">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <h1><a href="/">Liam's marketplace</a> 😎</h1>
+        <br>
+        <nav>
+            <ul>
+                <li>🔥<a href="hot">hot deals</a>🔥</li>
+                <li><a href="food">food & drink</a></li>
+                <li><a href="other">other items</a></li>
+                <li><a href="feedback">feedback</a></li>
+            </ul>
+        </nav>
+    </header>
 
+    <main>
+        <section class="product-container">
+            <article class="product">
+                <input id="feedback-input">
+                <button onclick="POSTfeedback(document.getElementById('feedback-input').value)">send</button>
+            </article>
+        </section>
+    </main>
+
+    <footer>
+        <marquee>&copy; 2024 Liam's Marketplace</marquee>
+    </footer>
+
+    <script>
+        function POSTfeedback(feedback) {
+            
+        }
+    </script>
+</body>
+</html>
