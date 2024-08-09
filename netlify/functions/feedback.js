@@ -12,7 +12,6 @@ const readFeedback = () => {
         }
     } catch (error) {
         console.error('Error reading feedback file:', error);
-        return [];
     }
 };
 
