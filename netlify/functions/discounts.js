@@ -1,5 +1,5 @@
 const discounts = {
-  "LIAMISTHEBESTMWUAHAHAHAHAHA": { percent: 0 }
+  "hi": { percent: 100 }
 };
 
 exports.handler = async event => {
