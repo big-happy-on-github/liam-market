@@ -106,7 +106,7 @@
                 <input id="product-discount-code" placeholder="discount code">
                 <p>-</p>
                 <div id="apple">
-                    <button id="apple-pay-button" class="apple-pay-button"></button>
+                    <button id="apple-pay-button" class="apple-pay-button">Apple Pay</button>
                     <p>or</p>
                 </div>
                 <button id="credit-buy-button">Credit Card</button>
@@ -180,7 +180,7 @@
                         document.title = document.title+" "+product.name
                         if (p) p.textContent = `$${product.price.toFixed(2)}`; // Set product price, formatted to 2 decimal places
                         buttons.forEach(button => {
-                            button.onclick = () => window.location.href = `product?id=${productID}`; // Set button action
+                            //button.onclick = () => window.location.href = `product?id=${productID}`; // Set button action
                         });
             
                         if (!product.hot && !product.food) {
