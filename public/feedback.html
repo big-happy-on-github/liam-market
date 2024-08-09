@@ -35,7 +35,7 @@
     </footer>
 
     <script>
-        function GETfeedback() {
+        async function GETfeedback() {
             try {
                 const response = await fetch('/.netlify/functions/feedback', {
                     method: 'GET',
@@ -53,7 +53,7 @@
             }
         }
         
-        function POSTfeedback(feedback) {
+        async function POSTfeedback(feedback) {
             try {
                 const response = await fetch('/.netlify/functions/feedback', {
                     method: 'POST',
