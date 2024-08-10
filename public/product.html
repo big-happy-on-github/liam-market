@@ -155,6 +155,12 @@
                 return {}; // Return empty object if error occurs
             }
         }
+
+        function forever() {
+            if (parseInt(document.getElementById("product-quantity").value) < 1) {
+                document.getElementById("product-quantity").value = "1";
+            } 
+        }
         
         document.addEventListener('DOMContentLoaded', async () => {
             const products = await fetchProducts();
@@ -206,17 +212,13 @@
                                     supportedNetworks: ['visa', 'masterCard', 'amex'],
                                     merchantCapabilities: ['supports3DS'],
                                     total: {
-                                        label: `${product.name}`,
+                                        label: `for ${product.name}`,
                                         amount: `${product.price}`
                                     }
                                 };
                 
                                 applePayButton.addEventListener('click', () => {
                                     // Check the product quantity
-                                    if (parseInt(document.getElementById("product-quantity").value) < 1) {
-                                        alert("<1 product isn't possible...");
-                                        return;
-                                    } 
             
                                     const session = new ApplePaySession(1, paymentRequest);
                 
@@ -264,6 +266,7 @@
             document.getElementById("product-quantity").value = 1;
         });
         fetchDiscounts();
+        forever();
     </script>
 </body>
 </html>
