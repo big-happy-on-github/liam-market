@@ -160,7 +160,7 @@
             if (parseInt(document.getElementById("product-quantity").value) < 1) {
                 document.getElementById("product-quantity").value = "1";
             }
-            forever();
+            setInterval(forever, 1000);
         }
         
         document.addEventListener('DOMContentLoaded', async () => {
