@@ -214,7 +214,7 @@
                     }
                     if (h2) h2.textContent = product.name || 'Product Name';
                     document.title += " " + (product.name || '');
-                    if (p) p.textContent = `$${product.price.toFixed(2)}`;
+                    if (p) p.textContent = `$${product.price.toFixed(2)} (pre-shipping & tax)`;
     
                     buttons.forEach(button => {
                         // Add button functionality if needed
