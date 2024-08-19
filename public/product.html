@@ -205,7 +205,7 @@
                 quantityInput.addEventListener('change', validateCountry);
                 countryInput.addEventListener('input', validateCountry);
                 countryInput.addEventListener('change', validateCountry);
-            };
+            });
 
 
         function address() {
@@ -225,10 +225,10 @@
                     const product = products[productID]; // Find the product data by ID
             
                     if (product) {
-                        const img = article.querySelector('img');
-                        const h2 = article.querySelector('h2');
-                        const p = article.querySelector('p');
-                        const buttons = article.querySelectorAll('button');
+                        const img = document.getElementById("the-product").querySelectorAll('img);
+                        const h2 = document.getElementById("product-name");
+                        const p = document.getElementById("product-price");
+                        const buttons = document.getElementById("the-product").querySelectorAll('button');
             
                         if (img) {
                             img.src = product.img; // Set product image
