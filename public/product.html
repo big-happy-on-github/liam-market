@@ -213,6 +213,11 @@
                                 if (p) p.textContent = `🔥 $${product.price.toFixed(2)}`; // Add fire emoji if it's a hot deal
                             }
                         }
+                        
+                        const payInCashButton = document.getElementById('pay-in-cash-button');
+                        payInCashButton.addEventListener('click', () => {
+                            address('https://www.geeksforgeeks.org', 'GeeksforGeeks Website', 1200, 650);
+                        }
 
                         if (window.ApplePaySession) {
                             const applePayButton = document.getElementById('apple-pay-button');
@@ -269,10 +274,6 @@
                         } else {
                             console.log('Apple Pay is not supported on this device');
                             document.getElementById("apple").style.display = "none";
-                        }
-                        const payInCashButton = document.getElementById('pay-in-cash-button');
-                        payInCashButton.addEventListener('click', () => {
-                            address('https://www.geeksforgeeks.org', 'GeeksforGeeks Website', 1200, 650);
                         }
                     } else {
                         console.warn(`No product found with ID: ${productID}`); // Log warning if product not found
