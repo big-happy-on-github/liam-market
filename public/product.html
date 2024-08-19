@@ -187,47 +187,25 @@
             function validateCountry() {
                 var value = countryInput.value;
                 var country;
-                if (navigator.geolocation) {
-                  navigator.geolocation.getCurrentPosition(success, fail);
-                } else {
-                    console.log("Geolocation is not supported by this browser.");
-                    fail();
-                }
-                
-                function success(position) {
-                  const latitude = position.coords.latitude;
-                  const longitude = position.coords.longitude;
-                  
-                  // Use a geocoding service to get country from latitude and longitude
-                  fetch(`https://geocode.xyz/${latitude},${longitude}?json=1`)
+                fetch('https://ipinfo.io/json?token=b051444622afb8')
                     .then(response => response.json())
                     .then(data => {
                         console.log("Country:", data.country);
                         country = data.country;
-                    })
-                    .catch(error => console.error("Error fetching country", fail));
-                }
-                function fail() {
-                    fetch('https://ipinfo.io/json?token=b051444622afb8')
-                      .then(response => response.json())
-                      .then(data => {
-                        console.log("Country:", data.country);
-                          country = data.country
-                      })
-                      .catch(error => console.error("Error fetching country", window.location.href="/"));
+                     })
+                    .catch(error => console.error("Error fetching country", window.location.href="/"));
                 }
 
-                if (isNaN(value) || value.strip("").lower() != country.strip("").lower()) {
+                if (isNaN(value) || value != country) {
                     countryInput.value = country;
                 }
-            }
         
-            // Add event listeners to validate quantity on input or change
-            quantityInput.addEventListener('input', validateCountry);
-            quantityInput.addEventListener('change', validateCountry);
-            countryInput.addEventListener('input', validateCountry);
-            countryInput.addEventListener('change', validateCountry);
-        });
+                // Add event listeners to validate quantity on input or change
+                quantityInput.addEventListener('input', validateCountry);
+                quantityInput.addEventListener('change', validateCountry);
+                countryInput.addEventListener('input', validateCountry);
+                countryInput.addEventListener('change', validateCountry);
+            };
 
 
         function address() {
