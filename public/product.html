@@ -97,7 +97,7 @@
     </header>
 
     <main>
-        <section class="product-container">
+        <section class="product-container" id="the-product">
             <article class="product" id="product">
                 <h1 id="product-status">🔥 hot deal 🔥</h1>
                 <img src="https://via.placeholder.com/200" alt="Product Image" id="product-img">
@@ -112,6 +112,20 @@
                 </div>
                 <button id="pay-in-cash-button">Pay in cash</button>
                 <!--<button id="credit-buy-button">Credit Card</button>-->
+            </article>
+        </section>
+        <section class="product-container" id="address" style="display:none;">
+            <article class="product" id="product">
+                <h2>shipping information</h2>
+                <p>shipping is NOT free</p>
+                <input id="street" placeholder="street address...">
+                <input id="city" placeholder="city name...">
+                <input id="country" placeholder="country...">
+                <select id="shipping-option" name="USPS">
+                    <option value="USPS">USPS</option>
+                    <option value="UPS">UPS</option>
+                    <option value="FedEx">FedEx</option>
+                </select>
             </article>
         </section>
     </main>
@@ -157,22 +171,68 @@
             }
         }
 
-        function forever() {
-            if (parseInt(document.getElementById("product-quantity").value) < 1 || !isInteger(document.getElementById("product-quantity").value)) {
-                document.getElementById("product-quantity").value = "1";
+        // Ensure this code runs when the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', function () {
+            var quantityInput = document.getElementById("product-quantity");
+            var countryInput = document.getElementById("country");
+        
+            // Function to validate and correct the quantity
+            function validateQuantity() {
+                var value = parseInt(quantityInput.value, 10);
+                if (isNaN(value) || value < 1) {
+                    quantityInput.value = "1";
+                }
             }
-            setInterval(forever, 100);
-        }
 
-        function address(pageURL, pageTitle,
-            popupWinWidth, popupWinHeight) {
-            let left = (screen.width - popupWinWidth) / 2;
-            let top = (screen.height - popupWinHeight) / 4;
+            function validateCountry() {
+                var value = countryInput.value;
+                var country;
+                if (navigator.geolocation) {
+                  navigator.geolocation.getCurrentPosition(success, fail);
+                } else {
+                    console.log("Geolocation is not supported by this browser.");
+                    fail();
+                }
+                
+                function success(position) {
+                  const latitude = position.coords.latitude;
+                  const longitude = position.coords.longitude;
+                  
+                  // Use a geocoding service to get country from latitude and longitude
+                  fetch(`https://geocode.xyz/${latitude},${longitude}?json=1`)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log("Country:", data.country);
+                        country = data.country;
+                    })
+                    .catch(error => console.error("Error fetching country", fail));
+                }
+                function fail() {
+                    fetch('https://ipinfo.io/json?token=b051444622afb8')
+                      .then(response => response.json())
+                      .then(data => {
+                        console.log("Country:", data.country);
+                          country = data.country
+                      })
+                      .catch(error => console.error("Error fetching country", window.location.href="/"));
+                }
 
-            let myWindow = window.open(pageURL, pageTitle,
-                'resizable=yes, width=' + popupWinWidth
-                + ', height=' + popupWinHeight + ', top='
-                + top + ', left=' + left);
+                if (isNaN(value) || value.strip("").lower() != country.strip("").lower()) {
+                    countryInput.value = country;
+                }
+            }
+        
+            // Add event listeners to validate quantity on input or change
+            quantityInput.addEventListener('input', validateCountry);
+            quantityInput.addEventListener('change', validateCountry);
+            countryInput.addEventListener('input', validateCountry);
+            countryInput.addEventListener('change', validateCountry);
+        });
+
+
+        function address() {
+            document.getElementById("address").style.display = "block";
+            document.getElementById("the-product").style.display = "none";
         }
         
         document.addEventListener('DOMContentLoaded', async () => {
@@ -216,7 +276,7 @@
                         
                         const payInCashButton = document.getElementById('pay-in-cash-button');
                         payInCashButton.addEventListener('click', () => {
-                            address('https://www.geeksforgeeks.org', 'GeeksforGeeks Website', 1200, 650);
+                            address();
                         });
 
 
@@ -262,6 +322,7 @@
                                     session.onpaymentauthorized = (event) => {
                                         // Handle the payment here
                                         session.completePayment(ApplePaySession.STATUS_SUCCESS);
+                                        address();
                                     };
                 
                                     session.oncancel = () => {
@@ -286,7 +347,6 @@
             document.getElementById("product-quantity").value = 1;
         });
         fetchDiscounts();
-        forever();
     </script>
 </body>
 </html>
