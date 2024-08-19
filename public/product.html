@@ -294,6 +294,8 @@
             document.getElementById("product-quantity").value = 1;
             await fetchDiscounts();
             await validateCountry();
+            setTimeout(validateQuantity, 100);
+            setTimeout(validateCountry, 100);
         });
     </script>
 </body>
