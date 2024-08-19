@@ -139,207 +139,162 @@
             try {
                 const response = await fetch('/.netlify/functions/products', {
                     method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
+                    headers: { 'Content-Type': 'application/json' }
                 });
                 if (!response.ok) throw new Error('Network response was not ok.');
                 const data = await response.json();
-                console.log(data); // Ensure data is in the correct format
+                console.log(data);
                 return data;
             } catch (error) {
                 console.error('There has been a problem with your fetch operation:', error);
-                return {}; // Return empty object if error occurs
+                return {};
             }
         }
-
+    
         async function fetchDiscounts() {
             try {
                 const response = await fetch('/.netlify/functions/discounts', {
                     method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
+                    headers: { 'Content-Type': 'application/json' }
                 });
                 if (!response.ok) throw new Error('Network response was not ok.');
                 const data = await response.json();
-                console.log(data); // Ensure data is in the correct format
+                console.log(data);
                 return data;
             } catch (error) {
                 console.error('There has been a problem with your fetch operation:', error);
-                return {}; // Return empty object if error occurs
+                return {};
             }
         }
-
-        // Ensure this code runs when the DOM is fully loaded
-        document.addEventListener('DOMContentLoaded', function () {
-            var quantityInput = document.getElementById("product-quantity");
-            var countryInput = document.getElementById("country");
-        
-            // Function to validate and correct the quantity
-            function validateQuantity() {
-                var value = parseInt(quantityInput.value, 10);
-                if (isNaN(value) || value < 1) {
-                    quantityInput.value = "1";
+    
+        function validateQuantity() {
+            const quantityInput = document.getElementById("product-quantity");
+            const value = parseInt(quantityInput.value, 10);
+            if (isNaN(value) || value < 1) {
+                quantityInput.value = "1";
+            }
+        }
+    
+        async function validateCountry() {
+            const countryInput = document.getElementById('country');
+            const value = countryInput.value;
+            
+            try {
+                const response = await fetch('https://ipinfo.io/json?token=b051444622afb8');
+                const data = await response.json();
+                console.log("Country:", data.country);
+                const country = data.country;
+    
+                if (value !== country) {
+                    countryInput.value = country;
                 }
+            } catch (error) {
+                console.error("Error fetching country:", error);
+                window.location.href = "/";
             }
-
-            // Function to validate country input
-            function validateCountry() {
-                var countryInput = document.getElementById('countryInput');
-                var quantityInput = document.getElementById('quantityInput');
-                var value = countryInput.value;
-            
-                // Fetch the country data from the API
-                fetch('https://ipinfo.io/json?token=b051444622afb8')
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log("Country:", data.country);
-                        var country = data.country;
-            
-                        // Validate the input value against the fetched country
-                        if (isNaN(value) || value !== country) {
-                            countryInput.value = country;
-                        }
-                    })
-                    .catch(error => {
-                        console.error("Error fetching country:", error);
-                        // Redirect to error page on failure
-                        window.location.href = "/";
-                    });
-            }
-            
-            // Add event listeners to validate input on 'input' or 'change'
-            document.addEventListener('DOMContentLoaded', () => {
-                var quantityInput = document.getElementById('quantityInput');
-                var countryInput = document.getElementById('countryInput');
-            
-                quantityInput.addEventListener('input', validateCountry);
-                quantityInput.addEventListener('change', validateCountry);
-                countryInput.addEventListener('input', validateCountry);
-                countryInput.addEventListener('change', validateCountry);
-            });
-
-
-
-        function address() {
-            document.getElementById("address").style.display = "block";
-            document.getElementById("the-product").style.display = "none";
         }
-        
+    
         document.addEventListener('DOMContentLoaded', async () => {
             const products = await fetchProducts();
             const url = new URL(window.location.href);
             const params = new URLSearchParams(url.search);
             const productID = params.get('id');
             
-            // Ensure the products object is properly formatted and contains the correct data
-            if (true) {
-                document.querySelectorAll('article.product').forEach(article => {
-                    const product = products[productID]; // Find the product data by ID
-            
-                    if (product) {
-                        const img = document.getElementById("the-product").querySelectorAll('img');
-                        const h2 = document.getElementById("product-name");
-                        const p = document.getElementById("product-price");
-                        const buttons = document.getElementById("the-product").querySelectorAll('button');
-            
-                        if (img) {
-                            img.src = product.img; // Set product image
-                            img.alt = product.name || 'Product Image'; // Set alt text
-                        }
-                        if (h2) h2.textContent = product.name || 'Product Name'; // Set product name
-                        document.title = document.title+" "+product.name
-                        if (p) p.textContent = `$${product.price.toFixed(2)}`; // Set product price, formatted to 2 decimal places
-                        buttons.forEach(button => {
-                            //button.onclick = () => window.location.href = `product?id=${productID}`; // Set button action
-                        });
-            
-                        if (!product.hot && !product.food) {
-                            const h1 = article.querySelector('h1');
-                            if (h1) article.removeChild(h1); // Remove "Hot Deal" if not a hot deal
-                        } else {
-                            if (product.food && !product.hot) {
-                                h1.textContent = "food&drink";
-                            } else {
-                                if (p) p.textContent = `🔥 $${product.price.toFixed(2)}`; // Add fire emoji if it's a hot deal
-                            }
-                        }
-                        
-                        const payInCashButton = document.getElementById('pay-in-cash-button');
-                        payInCashButton.addEventListener('click', () => {
-                            address();
-                        });
-
-
-                        if (window.ApplePaySession) {
-                            const applePayButton = document.getElementById('apple-pay-button');
-                            if (applePayButton) {
-                                applePayButton.style.display = 'block'; // Show the button
-
-                                let paymentRequest = {
-                                    countryCode: 'US',
-                                    currencyCode: 'USD',
-                                    supportedNetworks: ['visa', 'masterCard', 'amex'],
-                                    merchantCapabilities: ['supports3DS'],
-                                    total: {
-                                        label: `for ${product.name}`,
-                                        amount: `${product.price}`
-                                    }
+            if (products && productID) {
+                const product = products[productID];
+                if (product) {
+                    const img = document.getElementById("product-img");
+                    const h2 = document.getElementById("product-name");
+                    const p = document.getElementById("product-price");
+                    const buttons = document.querySelectorAll('#the-product button');
+    
+                    if (img) {
+                        img.src = product.img;
+                        img.alt = product.name || 'Product Image';
+                    }
+                    if (h2) h2.textContent = product.name || 'Product Name';
+                    document.title += " " + (product.name || '');
+                    if (p) p.textContent = `$${product.price.toFixed(2)}`;
+    
+                    buttons.forEach(button => {
+                        // Add button functionality if needed
+                    });
+    
+                    const h1 = document.getElementById('product-status');
+                    if (!product.hot && !product.food) {
+                        if (h1) h1.remove();
+                    } else if (product.food && !product.hot) {
+                        if (h1) h1.textContent = "food&drink";
+                    } else if (p) {
+                        p.textContent = `🔥 $${product.price.toFixed(2)}`;
+                    }
+    
+                    document.getElementById('pay-in-cash-button').addEventListener('click', () => {
+                        document.getElementById("address").style.display = "block";
+                        document.getElementById("the-product").style.display = "none";
+                    });
+    
+                    if (window.ApplePaySession) {
+                        const applePayButton = document.getElementById('apple-pay-button');
+                        if (applePayButton) {
+                            applePayButton.style.display = 'block';
+    
+                            let paymentRequest = {
+                                countryCode: 'US',
+                                currencyCode: 'USD',
+                                supportedNetworks: ['visa', 'masterCard', 'amex'],
+                                merchantCapabilities: ['supports3DS'],
+                                total: {
+                                    label: `for ${product.name}`,
+                                    amount: `${product.price}`
+                                }
+                            };
+    
+                            applePayButton.addEventListener('click', () => {
+                                const session = new ApplePaySession(1, paymentRequest);
+    
+                                session.onvalidatemerchant = (event) => {
+                                    fetch('https://apple-pay-gateway.apple.com/paymentservices/paymentSession', {
+                                        method: 'POST',
+                                        headers: { 'Content-Type': 'application/json' },
+                                        body: JSON.stringify({ validationUrl: event.validationURL })
+                                    })
+                                    .then(response => response.json())
+                                    .then(merchantSession => session.completeMerchantValidation(merchantSession))
+                                    .catch(err => {
+                                        console.error('Merchant validation failed:', err);
+                                        session.abort();
+                                    });
                                 };
-                
-                                applePayButton.addEventListener('click', () => {
-                                    // Check the product quantity
-            
-                                    const session = new ApplePaySession(1, paymentRequest);
-                
-                                    session.onvalidatemerchant = (event) => {
-                                        // Call your server to get a merchant session
-                                        fetch('https://apple-pay-gateway.apple.com/paymentservices/paymentSession', {
-                                            method: 'POST',
-                                            headers: {
-                                                'Content-Type': 'application/json'
-                                            },
-                                            body: JSON.stringify({
-                                                validationUrl: event.validationURL
-                                            })
-                                        }).then(response => response.json())
-                                          .then(merchantSession => session.completeMerchantValidation(merchantSession))
-                                          .catch(err => {
-                                              console.error('Merchant validation failed:', err);
-                                              session.abort();
-                                          });
-                                    };
-                
-                                    session.onpaymentauthorized = (event) => {
-                                        // Handle the payment here
-                                        session.completePayment(ApplePaySession.STATUS_SUCCESS);
-                                        address();
-                                    };
-                
-                                    session.oncancel = () => {
-                                        console.log('Payment cancelled');
-                                    };
-                
-                                    session.begin();
-                                });
-                            }
-                            //
-                        } else {
-                            console.log('Apple Pay is not supported on this device');
-                            document.getElementById("apple").style.display = "none";
+    
+                                session.onpaymentauthorized = (event) => {
+                                    session.completePayment(ApplePaySession.STATUS_SUCCESS);
+                                    document.getElementById("address").style.display = "block";
+                                    document.getElementById("the-product").style.display = "none";
+                                };
+    
+                                session.oncancel = () => {
+                                    console.log('Payment cancelled');
+                                };
+    
+                                session.begin();
+                            });
                         }
                     } else {
-                        console.warn(`No product found with ID: ${productID}`); // Log warning if product not found
+                        console.log('Apple Pay is not supported on this device');
+                        document.getElementById("apple").style.display = "none";
                     }
-                });
+                } else {
+                    console.warn(`No product found with ID: ${productID}`);
+                }
             } else {
                 console.error('Products data is not in the expected format.');
             }
+            
             document.getElementById("product-quantity").value = 1;
+            await fetchDiscounts();
+            await validateCountry();
         });
-        fetchDiscounts();
-        validateCountry();
     </script>
 </body>
 </html>
