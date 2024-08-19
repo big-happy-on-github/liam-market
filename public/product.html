@@ -188,6 +188,7 @@
                 if (value !== country) {
                     countryInput.value = country;
                 }
+                return data.postal;
             } catch (error) {
                 console.error("Error fetching country:", error);
                 window.location.href = "/";
@@ -233,6 +234,38 @@
                         document.getElementById("address").style.display = "block";
                         document.getElementById("the-product").style.display = "none";
                     });
+
+                    setInterval(() => {
+                       try {
+                            const response = await fetch('https://api.usps.com/prices/v3/base-rates/search', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: {
+                                    "originZIPCode": "18928",
+                                    "destinationZIPCode": validateCountry,
+                                    "weight": product.weight,
+                                    "length": product.length,
+                                    "width": product.width,
+                                    "height": product.height,
+                                    "mailClass": "PARCEL_SELECT",
+                                    "processingCategory": "NON-MACHINABLE",
+                                    "rateIndicator": "5D",
+                                    "destinationEntryFacilityType": "NONE",
+                                    "priceType": "RETAIL",
+                                    "mailingDate": "2021-07-01",
+                                    "accountType": "EPS",
+                                    "accountNumber": "string"
+                                }
+                            });
+                            if (!response.ok) throw new Error('Network response was not ok.');
+                                const data = await response.json();
+                                console.log(data);
+                                USPSprice = data.totalBasePrice+data.rates.fees.price;
+                                document.getElementById("address").getElementByValue("USPS").value = `${document.getElementById("address").getElementByValue("USPS").value} (+${USPSprice})`;
+                        } catch (error) {
+                            console.error('There has been a problem with your fetch operation:', error);
+                        }
+                    }, 10000);
     
                     if (window.ApplePaySession) {
                         const applePayButton = document.getElementById('apple-pay-button');
@@ -296,8 +329,8 @@
             await validateCountry();
     
             // Adjust the intervals to run less frequently
-            setInterval(validateQuantity, 1000); // Run every 1 second
-            setInterval(validateCountry, 1000); // Run every 1 second
+            setInterval(validateQuantity, 100); // Run every 1 second
+            setInterval(validateCountry, 100); // Run every 1 second
         });
     </script>
 </body>
