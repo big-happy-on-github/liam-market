@@ -110,7 +110,8 @@
                     <button id="apple-pay-button" class="apple-pay-button"></button>
                     <p>or</p>
                 </div>
-                <button id="credit-buy-button">Credit Card</button>
+                <button id="pay-in-cash-button">Pay in cash</button>
+                <!--<button id="credit-buy-button">Credit Card</button>-->
             </article>
         </section>
     </main>
@@ -162,6 +163,17 @@
             }
             setInterval(forever, 100);
         }
+
+        function address(pageURL, pageTitle,
+            popupWinWidth, popupWinHeight) {
+            let left = (screen.width - popupWinWidth) / 2;
+            let top = (screen.height - popupWinHeight) / 4;
+
+            let myWindow = window.open(pageURL, pageTitle,
+                'resizable=yes, width=' + popupWinWidth
+                + ', height=' + popupWinHeight + ', top='
+                + top + ', left=' + left);
+        }
         
         document.addEventListener('DOMContentLoaded', async () => {
             const products = await fetchProducts();
@@ -188,7 +200,7 @@
                         document.title = document.title+" "+product.name
                         if (p) p.textContent = `$${product.price.toFixed(2)}`; // Set product price, formatted to 2 decimal places
                         buttons.forEach(button => {
-                            button.onclick = () => window.location.href = `product?id=${productID}`; // Set button action
+                            //button.onclick = () => window.location.href = `product?id=${productID}`; // Set button action
                         });
             
                         if (!product.hot && !product.food) {
@@ -253,9 +265,14 @@
                                     session.begin();
                                 });
                             }
+                            //
                         } else {
                             console.log('Apple Pay is not supported on this device');
                             document.getElementById("apple").style.display = "none";
+                        }
+                        const payInCashButton = document.getElementById('pay-in-cash-button');
+                        payInCashButton.addEventListener('click', () => {
+                            address('https://www.geeksforgeeks.org', 'GeeksforGeeks Website', 1200, 650)
                         }
                     } else {
                         console.warn(`No product found with ID: ${productID}`); // Log warning if product not found
