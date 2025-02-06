@@ -18,6 +18,166 @@
             from { transform: translateX(100%); }
             to { transform: translateX(-100%); }
         }
+
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        /* Body and Header Styles */
+        html, body {
+            height: 100%;
+        }
+        
+        body {
+            background-color: #f4f4f4;
+            opacity: 0.8;
+            font-family: Arial, sans-serif;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 1rem 0;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000; /* Ensures the header stays above other content */
+        }
+        
+        header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        header h1 a {
+            color: #fff;
+            text-decoration: none;
+        }
+        
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        nav ul li {
+            display: inline;
+            margin: 0 1rem;
+        }
+        
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+        
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Main Content */
+        main {
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 80px; /* Adjust based on header height */
+            flex: 1;
+        }
+        
+        .product-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        
+        .product {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            width: 200px;
+            text-align: center;
+            margin: 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .product img {
+            width: 100%;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .product h2 {
+            font-size: 1.25rem;
+            margin: 0.5rem 0;
+        }
+        
+        .product p {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 1rem;
+        }
+        
+        .product button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+        
+        .product button:hover {
+            background-color: #0056b3;
+        }
+        
+        /* Hover Effects */
+        .product:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Footer Styles */
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1rem 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        
+        @media (max-width: 600px) {
+            nav ul li {
+                margin: 0 10px;
+            }
+        
+            nav ul li a {
+                font-size: 14px; /* Smaller font size for smaller screens */
+            }
+        }
+        
+        @media (max-width: 400px) {
+            nav ul li {
+                margin: 0 5px;
+            }
+        
+            nav ul li a {
+                font-size: 12px; /* Even smaller font size for very small screens */
+            }
+        }
     </style>
 </head>
 <body>
