@@ -7,116 +7,176 @@
     <link rel="icon" href="https://static.wikia.nocookie.net/a6357f3f-fc19-4295-84b6-b7fe99ca0b74/scale-to-width/755" type="image/x-icon">
     <link rel="stylesheet" href="css/styles.css">
     <style>
+        .footer-text {
+            display: block;
+            width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            animation: scrollText 8s linear infinite;
+        }
+        @keyframes scrollText {
+            from { transform: translateX(100%); }
+            to { transform: translateX(-100%); }
+        }
+
+        /* General Reset */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
         
+        /* Body and Header Styles */
+        html, body {
+            height: 100%;
+        }
+        
         body {
-            font-family: Arial, sans-serif;
             background-color: #f4f4f4;
+            opacity: 0.8;
+            font-family: Arial, sans-serif;
+            color: #333;
             display: flex;
             flex-direction: column;
-            align-items: center;
         }
-
+        
+        /* Header Styles */
         header {
             background-color: #333;
             color: #fff;
             padding: 1rem 0;
             text-align: center;
-            width: 100%;
             position: fixed;
             top: 0;
-            z-index: 1000;
+            width: 100%;
+            z-index: 1000; /* Ensures the header stays above other content */
         }
-
+        
+        header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
         header h1 a {
             color: #fff;
             text-decoration: none;
         }
-
+        
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        nav ul li {
+            display: inline;
+            margin: 0 1rem;
+        }
+        
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+        
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Main Content */
         main {
             padding: 2rem;
-            margin-top: 80px;
             display: flex;
             justify-content: center;
-            width: 100%;
+            flex-wrap: wrap;
+            margin-top: 80px; /* Adjust based on header height */
+            flex: 1;
         }
-
+        
         .product-container {
             display: flex;
-            justify-content: center;
+            justify-content: space-around;
+            flex-wrap: wrap;
         }
         
         .product {
             background: #fff;
+            border: 1px solid #ddd;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            padding: 2rem;
+            width: 200px;
             text-align: center;
-            max-width: 400px;
-            width: 100%;
+            margin: 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
         }
         
         .product img {
-            max-width: 100%;
-            border-radius: 8px;
+            width: 100%;
             border-bottom: 1px solid #ddd;
-        }
-        
-        .product h1 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
         }
         
         .product h2 {
             font-size: 1.25rem;
-            color: #333;
+            margin: 0.5rem 0;
         }
         
         .product p {
-            font-size: 1.125rem;
-            margin: 1rem 0;
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 1rem;
         }
         
-        button {
+        .product button {
             background-color: #007bff;
-            border: none;
-            border-radius: 5px;
             color: #fff;
-            font-size: 1rem;
-            padding: 0.75rem 1.5rem;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
             cursor: pointer;
+            font-size: 1rem;
             transition: background-color 0.3s;
             width: 100%;
         }
         
-        button:hover {
+        .product button:hover {
             background-color: #0056b3;
         }
         
+        /* Hover Effects */
+        .product:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Footer Styles */
         footer {
             background-color: #333;
             color: #fff;
             text-align: center;
             padding: 1rem 0;
-            width: 100%;
-            position: fixed;
+            position: relative;
             bottom: 0;
+            width: 100%;
         }
         
-        .footer-text {
-            display: block;
-            white-space: nowrap;
-            overflow: hidden;
-            animation: scrollText 8s linear infinite;
+        @media (max-width: 600px) {
+            nav ul li {
+                margin: 0 10px;
+            }
+        
+            nav ul li a {
+                font-size: 14px; /* Smaller font size for smaller screens */
+            }
         }
-
-        @keyframes scrollText {
-            from { transform: translateX(100%); }
-            to { transform: translateX(-100%); }
+        
+        @media (max-width: 400px) {
+            nav ul li {
+                margin: 0 5px;
+            }
+        
+            nav ul li a {
+                font-size: 12px; /* Even smaller font size for very small screens */
+            }
         }
     </style>
 </head>
