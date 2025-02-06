@@ -118,8 +118,6 @@
                 const product = products[productId];
                 if (!product) throw new Error('Product not found');
 
-                document.title.textContent += product.name;
-
                 document.getElementById('product-img').src = product.img;
                 document.getElementById('product-name').textContent = product.hot ? `🔥 ${product.name} 🔥` : product.name;
                 document.getElementById('product-description').textContent = product.description || 'No description available.';
