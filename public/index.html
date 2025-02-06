@@ -3,262 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>hw for sale</title>
+    <title>HW for Sale</title>
     <link rel="icon" href="https://static.wikia.nocookie.net/a6357f3f-fc19-4295-84b6-b7fe99ca0b74/scale-to-width/755" type="image/x-icon">
-    <link rel="stylesheet" href="css/styles.css">
-    <style>
-        .footer-text {
-            display: block;
-            width: 100%;
-            white-space: nowrap;
-            overflow: hidden;
-            animation: scrollText 8s linear infinite;
-        }
-        @keyframes scrollText {
-            from { transform: translateX(100%); }
-            to { transform: translateX(-100%); }
-        }
-
-        /* General Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        /* Body and Header Styles */
-        html, body {
-            height: 100%;
-        }
-        
-        body {
-            background-color: #f4f4f4;
-            opacity: 0.8;
-            font-family: Arial, sans-serif;
-            color: #333;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        /* Header Styles */
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 1rem 0;
-            text-align: center;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000; /* Ensures the header stays above other content */
-        }
-        
-        header h1 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        header h1 a {
-            color: #fff;
-            text-decoration: none;
-        }
-        
-        nav ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        
-        nav ul li {
-            display: inline;
-            margin: 0 1rem;
-        }
-        
-        nav ul li a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 1.1rem;
-        }
-        
-        nav ul li a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Main Content */
-        main {
-            padding: 2rem;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 80px; /* Adjust based on header height */
-            flex: 1;
-        }
-        
-        .product-container {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-        }
-        
-        .product {
-            background: #fff;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            width: 200px;
-            text-align: center;
-            margin: 1rem;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .product img {
-            width: 100%;
-            border-bottom: 1px solid #ddd;
-        }
-        
-        .product h2 {
-            font-size: 1.25rem;
-            margin: 0.5rem 0;
-        }
-        
-        .product p {
-            font-size: 1.1rem;
-            color: #555;
-            margin-bottom: 1rem;
-        }
-        
-        .product button {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background-color 0.3s;
-            width: 100%;
-        }
-        
-        .product button:hover {
-            background-color: #0056b3;
-        }
-        
-        /* Hover Effects */
-        .product:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        }
-        
-        /* Footer Styles */
-        footer {
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: 1rem 0;
-            position: relative;
-            bottom: 0;
-            width: 100%;
-        }
-        
-        @media (max-width: 600px) {
-            nav ul li {
-                margin: 0 10px;
-            }
-        
-            nav ul li a {
-                font-size: 14px; /* Smaller font size for smaller screens */
-            }
-        }
-        
-        @media (max-width: 400px) {
-            nav ul li {
-                margin: 0 5px;
-            }
-        
-            nav ul li a {
-                font-size: 12px; /* Even smaller font size for very small screens */
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <h1><a href="/">hw for sale</a> 📚</h1>
-        <br>
-    </header>
 
-    <main>
-        <section id="hot-products" class="product-container"></section>
-        <section id="other-products" class="product-container"></section>
-    </main>
+<header>
+    <h1><a href="/">📚 HW for Sale</a></h1>
+</header>
 
-    <footer>
-        <span class="footer-text">&copy; 2024 hw for sale</span>
-    </footer>
+<main>
+    <section id="hot-products" class="product-container"></section>
+    <section id="other-products" class="product-container"></section>
+</main>
 
-    <script>
-        async function fetchProducts() {
-            try {
-                const response = await fetch('/.netlify/functions/products', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ none: true })
-                });
+<footer>
+    &copy; 2024 HW for Sale
+</footer>
 
-                if (!response.ok) throw new Error('Failed to fetch products');
-                
-                return await response.json();
-            } catch (error) {
-                console.error("Error fetching products:", error);
-                return null;
-            }
-        }
-        
-        document.addEventListener('DOMContentLoaded', async () => {
-            const products = await fetchProducts();
-            if (!products) return;
-
-            const hotProductsContainer = document.getElementById('hot-products');
-            const otherProductsContainer = document.getElementById('other-products');
-
-            Object.keys(products).forEach(productId => {
-                const product = products[productId];
-
-                const article = document.createElement('article');
-                article.classList.add('product');
-                article.id = productId;
-
-                if (product.hot) {
-                    const hotTitle = document.createElement('h1');
-                    hotTitle.textContent = '🔥 hot deal 🔥';
-                    article.appendChild(hotTitle);
-                }
-
-                const img = document.createElement('img');
-                img.src = product.img;
-                img.alt = product.name || 'Product Image';
-                article.appendChild(img);
-
-                const h2 = document.createElement('h2');
-                h2.textContent = product.name;
-                article.appendChild(h2);
-
-                const p = document.createElement('p');
-                p.textContent = 'cost: ';
-                p.textContent += product.hot ? `🔥 ${product.price}` : product.price;
-                article.appendChild(p);
-
-                const button = document.createElement('button');
-                button.textContent = 'lemme buy it';
-                button.onclick = () => window.location.href = `/product?id=${productId}`;
-                article.appendChild(button);
-
-                if (product.hot) {
-                    hotProductsContainer.appendChild(article);
-                } else {
-                    otherProductsContainer.appendChild(article);
-                }
+<script>
+    async function fetchProducts() {
+        try {
+            const response = await fetch('/.netlify/functions/products', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ none: true })
             });
+
+            if (!response.ok) throw new Error('Failed to fetch products');
+
+            return await response.json();
+        } catch (error) {
+            console.error("Error fetching products:", error);
+            return null;
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        const products = await fetchProducts();
+        if (!products) return;
+
+        const hotProductsContainer = document.getElementById('hot-products');
+        const otherProductsContainer = document.getElementById('other-products');
+
+        Object.keys(products).forEach(productId => {
+            const product = products[productId];
+
+            const article = document.createElement('article');
+            article.classList.add('product');
+            article.id = productId;
+
+            if (product.hot) {
+                const hotLabel = document.createElement('div');
+                hotLabel.classList.add('hot-deal');
+                hotLabel.textContent = '🔥 Hot Deal 🔥';
+                article.appendChild(hotLabel);
+            }
+
+            const img = document.createElement('img');
+            img.src = product.img;
+            img.alt = product.name || 'Product Image';
+            article.appendChild(img);
+
+            const h2 = document.createElement('h2');
+            h2.textContent = product.name;
+            article.appendChild(h2);
+
+            const p = document.createElement('p');
+            p.textContent = `Cost: ${product.hot ? `🔥 ${product.price}` : product.price}`;
+            article.appendChild(p);
+
+            const button = document.createElement('button');
+            button.textContent = 'Buy Now';
+            button.onclick = () => window.location.href = `/product?id=${productId}`;
+            article.appendChild(button);
+
+            if (product.hot) {
+                hotProductsContainer.appendChild(article);
+            } else {
+                otherProductsContainer.appendChild(article);
+            }
         });
-    </script>
+    });
+</script>
+
 </body>
 </html>
