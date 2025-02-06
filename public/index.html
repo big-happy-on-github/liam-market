@@ -11,17 +11,18 @@
             width: 100%;
             overflow: hidden;
             white-space: nowrap;
-            position: relative;
             background: #f8d210; /* Light background for visibility */
             padding: 10px 0;
             font-size: 20px;
             font-weight: bold;
+            position: relative;
         }
         
         .marquee span {
             color: black;
             display: inline-block;
-            padding-left: 100%;
+            min-width: 100vw; /* Ensures text is wide enough */
+            white-space: nowrap;
             animation: marquee 10s linear infinite;
         }
         
