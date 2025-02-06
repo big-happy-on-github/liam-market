@@ -55,7 +55,7 @@
     
                 const label = document.createElement('div');
                 label.classList.add('product-label');
-                label.textContent = product.hot ? '🔥 Hot Deal 🔥' : ''; // Blank label for non-hot products
+                label.textContent = product.hot ? '🔥 hot deal 🔥' : ''; // Blank label for non-hot products
                 article.appendChild(label);
     
                 const img = document.createElement('img');
@@ -68,11 +68,11 @@
                 article.appendChild(h2);
     
                 const p = document.createElement('p');
-                p.textContent = `Cost: ${product.hot ? `🔥 ${product.price}` : product.price}`;
+                p.textContent = `cost: ${product.hot ? `🔥 ${product.price}` : product.price}`;
                 article.appendChild(p);
     
                 const button = document.createElement('button');
-                button.textContent = 'Buy Now';
+                button.textContent = 'buy it';
                 button.onclick = () => window.location.href = `/product?id=${productId}`;
                 article.appendChild(button);
     
