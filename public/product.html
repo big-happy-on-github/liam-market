@@ -111,7 +111,7 @@
                 if (!product) throw new Error('Product not found');
 
                 document.getElementById('product-img').src = product.img;
-                document.getElementById('product-name').textContent = product.name;
+                document.getElementById('product-name').textContent = product.hot ? `🔥 ${product.name} 🔥` : product.name;
                 document.getElementById('product-description').textContent = product.description || 'No description available.';
                 document.getElementById('product-price').textContent = product.hot ? `cost: 🔥${product.price}` : `cost: ${product.price}`;
                 document.getElementById('buy-button').onclick = () => window.location.href = `/product?id=${productId}`;
