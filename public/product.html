@@ -66,11 +66,7 @@
                 button.onclick = () => window.location.href = `/product?id=${productId}`;
                 article.appendChild(button);
     
-                if (product.hot) {
-                    hotProductsContainer.appendChild(article);
-                } else {
-                    otherProductsContainer.appendChild(article);
-                }
+                document.querySelectorAll("section")[0].appendChild(article);
             } catch (error) {
                 console.error("Error fetching product:", error);
             }
