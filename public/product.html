@@ -218,19 +218,36 @@
                 const products = await response.json();
                 const product = products[productId];
                 
-                if (product) {
-                    document.getElementById("product-img").src = product.img;
-                    document.getElementById("product-name").textContent = product.name;
-                    document.getElementById("product-price").textContent = `cost: $${product.price.toFixed(2)}`;
-                    document.title += ` - ${product.name}`;
-
-                    const status = document.getElementById("product-status");
-                    if (!product.hot) {
-                        status.remove();
-                    }
+                if (product.hot) {
+                    const hotTitle = document.createElement('h1');
+                    hotTitle.textContent = '🔥 hot deal 🔥';
+                    article.appendChild(hotTitle);
                 }
-            } catch (error) {
-                console.error("Error loading product:", error);
+
+                const img = document.createElement('img');
+                img.src = product.img;
+                img.alt = product.name || 'Product Image';
+                article.appendChild(img);
+
+                const h2 = document.createElement('h2');
+                h2.textContent = product.name;
+                article.appendChild(h2);
+
+                const p = document.createElement('p');
+                p.textContent = 'cost: ';
+                p.textContent += product.hot ? `🔥 ${product.price}` : product.price;
+                article.appendChild(p);
+
+                const button = document.createElement('button');
+                button.textContent = 'lemme buy it';
+                button.onclick = () => window.location.href = `/product?id=${productId}`;
+                article.appendChild(button);
+
+                if (product.hot) {
+                    hotProductsContainer.appendChild(article);
+                } else {
+                    otherProductsContainer.appendChild(article);
+                }
             }
         }
         
