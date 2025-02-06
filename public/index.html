@@ -92,7 +92,8 @@
                 article.appendChild(h2);
 
                 const p = document.createElement('p');
-                p.textContent = product.hot ? `🔥 $${product.price}` : `$${product.price}`;
+                p.textContent = 'cost: ';
+                p.textContent += product.hot ? `🔥 ${product.price}` : product.price;
                 article.appendChild(p);
 
                 const button = document.createElement('button');
