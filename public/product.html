@@ -13,15 +13,7 @@
     </header>
 
     <main>
-        <section class="product-container" id="the-product">
-            <article class="product" id="product">
-                <h1 id="product-status">🔥 hot deal 🔥</h1>
-                <img src="https://via.placeholder.com/200" alt="Product Image" id="product-img">
-                <h2 id="product-name">Loading...</h2>
-                <p id="product-price">$0.00</p>
-                <button id="order-button">Complete Order</button>
-            </article>
-        </section>
+        <section class="product-container"></section>
     </main>
 
     <footer>
@@ -46,27 +38,39 @@
                 const product = products[productId];
                 if (!product) throw new Error('Product not found');
     
-                // Get elements
-                const productElement = document.getElementById("product");
-                const productImg = document.getElementById("product-img");
-                const productName = document.getElementById("product-name");
-                const productPrice = document.getElementById("product-price");
-                const orderButton = document.getElementById("order-button");
+                const article = document.createElement('article');
+                article.classList.add('product');
+                article.id = productId;
     
-                // Update elements
+                const label = document.createElement('div');
+                label.classList.add('product-label');
+                label.textContent = product.hot ? '🔥 hot deal 🔥' : 'ㅤㅤㅤㅤㅤㅤ'; // Blank label for non-hot products
+                if (product.hot) label.classList.add('hot-deal');
+                article.appendChild(label);
+    
+                const img = document.createElement('img');
+                img.src = product.img;
+                img.alt = product.name || 'Product Image';
+                article.appendChild(img);
+    
+                const h2 = document.createElement('h2');
+                h2.textContent = product.name;
+                article.appendChild(h2);
+    
+                const p = document.createElement('p');
+                p.textContent = `cost: ${product.hot ? `🔥 ${product.price}` : product.price}`;
+                article.appendChild(p);
+    
+                const button = document.createElement('button');
+                button.textContent = 'buy it';
+                button.onclick = () => window.location.href = `/product?id=${productId}`;
+                article.appendChild(button);
+    
                 if (product.hot) {
-                    document.getElementById("product-status").textContent = "🔥 hot deal 🔥";
+                    hotProductsContainer.appendChild(article);
                 } else {
-                    document.getElementById("product-status").textContent = "";
+                    otherProductsContainer.appendChild(article);
                 }
-    
-                productImg.src = product.img;
-                productImg.alt = product.name || 'Product Image';
-                productName.textContent = product.name;
-                productPrice.textContent = `Cost: ${product.hot ? `🔥 ${product.price}` : product.price}`;
-                orderButton.textContent = "Lemme buy it";
-                orderButton.onclick = () => window.location.href = `/product?id=${productId}`;
-    
             } catch (error) {
                 console.error("Error fetching product:", error);
             }
