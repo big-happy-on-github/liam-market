@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Page</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -93,6 +94,12 @@
     </footer>
 
     <script>
+        const supabase = supabase.createClient(
+            'https://moijrxsiywjidkaqripc.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1vaWpyeHNpeXdqaWRrYXFyaXBjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg4NjE5OTEsImV4cCI6MjA1NDQzNzk5MX0.rOC1-gAxHtlrOkHWdiR2eb_RRpuVhhCEdMKG5MLEHlc'
+          );
+    </script>
+    <script>
         async function fetchProduct() {
             try {
                 const url = new URL(window.location.href);
@@ -114,29 +121,41 @@
                 document.getElementById('product-name').textContent = product.hot ? `🔥 ${product.name} 🔥` : product.name;
                 document.getElementById('product-description').textContent = product.description || 'No description available.';
                 document.getElementById('product-price').textContent = product.hot ? `cost: 🔥${product.price}` : `cost: ${product.price}`;
-                document.getElementById('buy-button').onclick = () => complete(productId);
+                document.getElementById('buy-button').onclick = () => complete(productId, product.price);
             } catch (error) {
                 console.error("Error fetching product:", error);
             }
         }
 
-        async function complete(productId) {
+        async function complete(productId, price) {
             let name;
             let location;
             let time;
             let phoneEmail;
             while (!name || !location || !time || !phoneEmail) {
                 name = prompt("name for the order");
-                location = prompt("location for the pickup of food");
-                time = prompt("time for the pickup of food");
-                phoneEmail = prompt("phone/email to recieve hw after food has been dropped off");
+                location = prompt(`location for the pickup of the ${price} (be specific)`);
+                time = prompt(`datetime for the pickup of the ${price} (be specific)`);
+                phoneEmail = prompt(`phone/email to recieve hw after the ${price} has been dropped off`);
                 if (!name || !location || !time || !phoneEmail) {
                     alert("it seems you didn't answer one of the prior questions. Requestioning...");
                 }
             }
             alert("if the order is unable to be completed, we will contact you via phone/email");
 
-            
+            const { data, error } = await supabase
+                .from('orders')
+                .insert([
+                    { name: name, location: location, time: time, phoneEmail: phoneEmail }
+                ]);
+        
+            if (error) {
+                console.error('Error inserting row:', error.message);
+            } else {
+                console.log('Inserted row:', data);
+                alert("order completed! Thank you");
+                window.location.href = "/";
+            }
         }
 
         document.addEventListener("DOMContentLoaded", fetchProduct);
