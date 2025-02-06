@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Page</title>
+    <title>hw for sale / </title>
+    <link rel="icon" href="https://static.wikia.nocookie.net/a6357f3f-fc19-4295-84b6-b7fe99ca0b74/scale-to-width/755" type="image/x-icon">
     <link rel="stylesheet" href="styles.css">
     <style>
         body {
@@ -116,6 +117,8 @@
                 const products = await response.json();
                 const product = products[productId];
                 if (!product) throw new Error('Product not found');
+
+                document.title.textContent += product.name;
 
                 document.getElementById('product-img').src = product.img;
                 document.getElementById('product-name').textContent = product.hot ? `🔥 ${product.name} 🔥` : product.name;
