@@ -6,12 +6,37 @@
     <title>hw for sale</title>
     <link rel="icon" href="https://static.wikia.nocookie.net/a6357f3f-fc19-4295-84b6-b7fe99ca0b74/scale-to-width/755" type="image/x-icon">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .marquee {
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            background: #f8d210; /* Light background for visibility */
+            padding: 10px 0;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        .marquee span {
+            display: inline-block;
+            padding-left: 100%;
+            animation: marquee 10s linear infinite;
+        }
+        
+        @keyframes marquee {
+            from { transform: translateX(100%); }
+            to { transform: translateX(-100%); }
+        }
+    </style>
 </head>
 <body>
     <header>
         <h1><a href="/">📚 hw for sale</a></h1>
     </header>
-    <marquee style="background-color: red">GRAND OPENING! BUY NOW</marquee>
+    <div class="marquee">
+        <span>GRAND OPENING! BUY NOW</span>
+    </div>
         
     <main>
         <section id="hot-products" class="product-container"></section>
