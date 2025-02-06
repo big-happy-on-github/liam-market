@@ -8,85 +8,81 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-<header>
-    <h1><a href="/">📚 hw for sale</a></h1>
-</header>
-
-<main>
-    <section id="hot-products" class="product-container"></section>
-    <section id="other-products" class="product-container"></section>
-</main>
-
-<footer>
-    &copy; 2024 hw for sale
-</footer>
-
-<script>
-    async function fetchProducts() {
-        try {
-            const response = await fetch('/.netlify/functions/products', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ none: true })
-            });
-
-            if (!response.ok) throw new Error('Failed to fetch products');
-
-            return await response.json();
-        } catch (error) {
-            console.error("Error fetching products:", error);
-            return null;
+    <header>
+        <h1><a href="/">📚 hw for sale</a></h1>
+    </header>
+        
+    <main>
+        <section id="hot-products" class="product-container"></section>
+        <section id="other-products" class="product-container"></section>
+    </main>
+        
+    <footer>
+        &copy; 2024 hw for sale
+    </footer>
+        
+    <script>
+        async function fetchProducts() {
+            try {
+                const response = await fetch('/.netlify/functions/products', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ none: true })
+                });
+    
+                if (!response.ok) throw new Error('Failed to fetch products');
+    
+                return await response.json();
+            } catch (error) {
+                console.error("Error fetching products:", error);
+                return null;
+            }
         }
-    }
-
-    document.addEventListener('DOMContentLoaded', async () => {
-        const products = await fetchProducts();
-        if (!products) return;
-
-        const hotProductsContainer = document.getElementById('hot-products');
-        const otherProductsContainer = document.getElementById('other-products');
-
-        Object.keys(products).forEach(productId => {
-            const product = products[productId];
-
-            const article = document.createElement('article');
-            article.classList.add('product');
-            article.id = productId;
-
-            if (product.hot) {
-                const hotLabel = document.createElement('div');
-                hotLabel.classList.add('hot-deal');
-                hotLabel.textContent = '🔥 Hot Deal 🔥';
-                article.appendChild(hotLabel);
-            }
-
-            const img = document.createElement('img');
-            img.src = product.img;
-            img.alt = product.name || 'Product Image';
-            article.appendChild(img);
-
-            const h2 = document.createElement('h2');
-            h2.textContent = product.name;
-            article.appendChild(h2);
-
-            const p = document.createElement('p');
-            p.textContent = `Cost: ${product.hot ? `🔥 ${product.price}` : product.price}`;
-            article.appendChild(p);
-
-            const button = document.createElement('button');
-            button.textContent = 'Buy Now';
-            button.onclick = () => window.location.href = `/product?id=${productId}`;
-            article.appendChild(button);
-
-            if (product.hot) {
-                hotProductsContainer.appendChild(article);
-            } else {
-                otherProductsContainer.appendChild(article);
-            }
+    
+        document.addEventListener('DOMContentLoaded', async () => {
+            const products = await fetchProducts();
+            if (!products) return;
+    
+            const hotProductsContainer = document.getElementById('hot-products');
+            const otherProductsContainer = document.getElementById('other-products');
+    
+            Object.keys(products).forEach(productId => {
+                const product = products[productId];
+    
+                const article = document.createElement('article');
+                article.classList.add('product');
+                article.id = productId;
+    
+                const label = document.createElement('div');
+                label.classList.add('product-label');
+                label.textContent = product.hot ? '🔥 Hot Deal 🔥' : ''; // Blank label for non-hot products
+                article.appendChild(label);
+    
+                const img = document.createElement('img');
+                img.src = product.img;
+                img.alt = product.name || 'Product Image';
+                article.appendChild(img);
+    
+                const h2 = document.createElement('h2');
+                h2.textContent = product.name;
+                article.appendChild(h2);
+    
+                const p = document.createElement('p');
+                p.textContent = `Cost: ${product.hot ? `🔥 ${product.price}` : product.price}`;
+                article.appendChild(p);
+    
+                const button = document.createElement('button');
+                button.textContent = 'Buy Now';
+                button.onclick = () => window.location.href = `/product?id=${productId}`;
+                article.appendChild(button);
+    
+                if (product.hot) {
+                    hotProductsContainer.appendChild(article);
+                } else {
+                    otherProductsContainer.appendChild(article);
+                }
+            });
         });
-    });
-</script>
-
+    </script>
 </body>
 </html>
