@@ -6,93 +6,106 @@
     <title>hw for sale</title>
     <link rel="icon" href="https://static.wikia.nocookie.net/a6357f3f-fc19-4295-84b6-b7fe99ca0b74/scale-to-width/755" type="image/x-icon">
     <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .footer-text {
+            display: block;
+            width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            animation: scrollText 8s linear infinite;
+        }
+        @keyframes scrollText {
+            from { transform: translateX(100%); }
+            to { transform: translateX(-100%); }
+        }
+    </style>
 </head>
 <body>
     <header>
         <h1><a href="/">hw for sale</a> 📚</h1>
         <br>
-        <!--<nav>
+        <!-- Navigation is commented out; uncomment if needed -->
+        <!-- <nav>
             <ul>
                 <li>🔥<a href="hot">hot deals</a>🔥</li>
                 <li><a href="math">math</a></li>
                 <li><a href="other">english & spanish</a></li>
                 <li><a href="feedback">ss</a></li>
-                <li><a href="feedback">ss</a></li>
             </ul>
-        </nav>-->
+        </nav> -->
     </header>
 
     <main>
-        <p>‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ </p>
         <section id="hot-products" class="product-container"></section>
         <section id="other-products" class="product-container"></section>
     </main>
 
     <footer>
-        <marquee>&copy; 2024 Liam's Marketplace</marquee>
+        <span class="footer-text">&copy; 2024 Liam's Marketplace</span>
     </footer>
 
     <script>
         async function fetchProducts() {
-            const options = {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ none: true })
-            };
-        
-            const response = await fetch(`/.netlify/functions/products`, options);
-            const data = await response.json();
-            console.log(data);
-            return data;
+            try {
+                const response = await fetch('/.netlify/functions/products', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ none: true })
+                });
+
+                if (!response.ok) throw new Error('Failed to fetch products');
+                
+                return await response.json();
+            } catch (error) {
+                console.error("Error fetching products:", error);
+                return null;
+            }
         }
         
         document.addEventListener('DOMContentLoaded', async () => {
             const products = await fetchProducts();
-            
-            if (products) {
-                const hotProductsContainer = document.getElementById('hot-products');
-                const otherProductsContainer = document.getElementById('other-products');
+            if (!products) return;
 
-                Object.keys(products).forEach(productId => {
-                    const product = products[productId];
-                    
-                    const article = document.createElement('article');
-                    article.classList.add('product');
-                    article.id = productId;
+            const hotProductsContainer = document.getElementById('hot-products');
+            const otherProductsContainer = document.getElementById('other-products');
 
-                    const h1 = document.createElement('h1');
-                    h1.textContent = product.hot ? '🔥 hot deal 🔥';
-                    if (h1.textContent) {
-                        article.appendChild(h1);
-                    }
-                    
-                    const img = document.createElement('img');
-                    img.src = product.img;
-                    img.alt = product.name || 'Product Image';
-                    article.appendChild(img);
+            Object.keys(products).forEach(productId => {
+                const product = products[productId];
 
-                    const h2 = document.createElement('h2');
-                    h2.textContent = product.name;
-                    article.appendChild(h2);
+                const article = document.createElement('article');
+                article.classList.add('product');
+                article.id = productId;
 
-                    const p = document.createElement('p');
-                    p.textContent = product.hot ? `🔥 $${product.price}` : `$${product.price}`;
-                    article.appendChild(p);
+                if (product.hot) {
+                    const hotTitle = document.createElement('h1');
+                    hotTitle.textContent = '🔥 hot deal 🔥';
+                    article.appendChild(hotTitle);
+                }
 
-                    const button = document.createElement('button');
-                    button.textContent = 'lemme buy it';
-                    button.onclick = () => window.location.href = `product?id=${productId}`;
-                    article.appendChild(button);
+                const img = document.createElement('img');
+                img.src = product.img;
+                img.alt = product.name || 'Product Image';
+                article.appendChild(img);
 
-                    if (product.hot) {
-                        hotProductsContainer.appendChild(article);
-                    } else {
-                        otherProductsContainer.appendChild(article);
-                    }
-                });
-            }
+                const h2 = document.createElement('h2');
+                h2.textContent = product.name;
+                article.appendChild(h2);
+
+                const p = document.createElement('p');
+                p.textContent = product.hot ? `🔥 $${product.price}` : `$${product.price}`;
+                article.appendChild(p);
+
+                const button = document.createElement('button');
+                button.textContent = 'lemme buy it';
+                button.onclick = () => window.location.href = `/product?id=${productId}`;
+                article.appendChild(button);
+
+                if (product.hot) {
+                    hotProductsContainer.appendChild(article);
+                } else {
+                    otherProductsContainer.appendChild(article);
+                }
+            });
         });
     </script>
 </body>
