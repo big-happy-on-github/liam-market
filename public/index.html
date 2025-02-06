@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HW for Sale</title>
+    <title>hw for sale</title>
     <link rel="icon" href="https://static.wikia.nocookie.net/a6357f3f-fc19-4295-84b6-b7fe99ca0b74/scale-to-width/755" type="image/x-icon">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
 <header>
-    <h1><a href="/">📚 HW for Sale</a></h1>
+    <h1><a href="/">📚 hw for sale</a></h1>
 </header>
 
 <main>
@@ -19,7 +19,7 @@
 </main>
 
 <footer>
-    &copy; 2024 HW for Sale
+    &copy; 2024 hw for sale
 </footer>
 
 <script>
@@ -59,6 +59,10 @@
                 hotLabel.classList.add('hot-deal');
                 hotLabel.textContent = '🔥 Hot Deal 🔥';
                 article.appendChild(hotLabel);
+            } else {
+                const label = document.createElement('div');
+                label.textContent = '';
+                article.appendChild(label);
             }
 
             const img = document.createElement('img');
