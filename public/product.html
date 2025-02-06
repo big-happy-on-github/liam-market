@@ -50,7 +50,6 @@
         .price {
             font-size: 1.5rem;
             font-weight: bold;
-            color: #d9534f;
         }
         .buy-button {
             display: inline-block;
@@ -84,7 +83,7 @@
                 <h2 id="product-name">Product Name</h2>
                 <p id="product-description">Product description goes here.</p>
                 <p class="price" id="product-price">$0.00</p>
-                <button class="buy-button" id="buy-button">Buy It</button>
+                <button class="buy-button" id="buy-button">complete purchase</button>
             </div>
         </section>
     </main>
@@ -114,7 +113,7 @@
                 document.getElementById('product-img').src = product.img;
                 document.getElementById('product-name').textContent = product.name;
                 document.getElementById('product-description').textContent = product.description || 'No description available.';
-                document.getElementById('product-price').textContent = `$${product.price}`;
+                document.getElementById('product-price').textContent = product.hot ? `cost: 🔥${product.price}` : `cost: ${product.price}`;
                 document.getElementById('buy-button').onclick = () => window.location.href = `/product?id=${productId}`;
             } catch (error) {
                 console.error("Error fetching product:", error);
