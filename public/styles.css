@@ -100,6 +100,9 @@ main {
 .hot-deal {
     /*background-color: #ff4d4d*/
     color: #ff4d4d;
+}
+
+.product-label {
     font-weight: bold;
     padding: 8px;
 }
