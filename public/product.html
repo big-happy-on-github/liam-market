@@ -3,9 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>hw for sale</title>
-    <link rel="icon" href="https://static.wikia.nocookie.net/a6357f3f-fc19-4295-84b6-b7fe99ca0b74/scale-to-width/755" type="image/x-icon">
+    <title>Product Page</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        header {
+            text-align: center;
+            background-color: #333;
+            color: #fff;
+            padding: 1rem 0;
+        }
+        header h1 a {
+            color: #fff;
+            text-decoration: none;
+        }
+        .product-container {
+            display: flex;
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .product-image img {
+            max-width: 400px;
+            border-radius: 8px;
+        }
+        .product-details {
+            flex: 1;
+        }
+        .product-details h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        .product-details p {
+            font-size: 1rem;
+            margin: 1rem 0;
+        }
+        .price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #d9534f;
+        }
+        .buy-button {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            margin-top: 1rem;
+        }
+        .buy-button:hover {
+            background-color: #4cae4c;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -13,7 +76,17 @@
     </header>
 
     <main>
-        <section class="product-container"></section>
+        <section class="product-container">
+            <div class="product-image">
+                <img id="product-img" src="" alt="Product Image">
+            </div>
+            <div class="product-details">
+                <h2 id="product-name">Product Name</h2>
+                <p id="product-description">Product description goes here.</p>
+                <p class="price" id="product-price">$0.00</p>
+                <button class="buy-button" id="buy-button">Buy It</button>
+            </div>
+        </section>
     </main>
 
     <footer>
@@ -37,41 +110,17 @@
                 const products = await response.json();
                 const product = products[productId];
                 if (!product) throw new Error('Product not found');
-    
-                const article = document.createElement('article');
-                article.classList.add('product');
-                article.id = productId;
-    
-                const label = document.createElement('div');
-                label.classList.add('product-label');
-                label.textContent = product.hot ? '🔥 hot deal 🔥' : 'ㅤㅤㅤㅤㅤㅤ'; // Blank label for non-hot products
-                if (product.hot) label.classList.add('hot-deal');
-                article.appendChild(label);
-    
-                const img = document.createElement('img');
-                img.src = product.img;
-                img.alt = product.name || 'Product Image';
-                article.appendChild(img);
-    
-                const h2 = document.createElement('h2');
-                h2.textContent = product.name;
-                article.appendChild(h2);
-    
-                const p = document.createElement('p');
-                p.textContent = `cost: ${product.hot ? `🔥 ${product.price}` : product.price}`;
-                article.appendChild(p);
-    
-                const button = document.createElement('button');
-                button.textContent = 'buy it';
-                button.onclick = () => window.location.href = `/product?id=${productId}`;
-                article.appendChild(button);
-    
-                document.querySelectorAll("section")[0].appendChild(article);
+
+                document.getElementById('product-img').src = product.img;
+                document.getElementById('product-name').textContent = product.name;
+                document.getElementById('product-description').textContent = product.description || 'No description available.';
+                document.getElementById('product-price').textContent = `$${product.price}`;
+                document.getElementById('buy-button').onclick = () => window.location.href = `/product?id=${productId}`;
             } catch (error) {
                 console.error("Error fetching product:", error);
             }
         }
-    
+
         document.addEventListener("DOMContentLoaded", fetchProduct);
     </script>
 </body>
