@@ -47,7 +47,14 @@
         &copy; 2024 hw for sale
     </footer>
         
-    <script>
+    <script type="module">
+        import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+    
+        const supabase = createClient(
+            'https://moijrxsiywjidkaqripc.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1vaWpyeHNpeXdqaWRrYXFyaXBjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg4NjE5OTEsImV4cCI6MjA1NDQzNzk5MX0.rOC1-gAxHtlrOkHWdiR2eb_RRpuVhhCEdMKG5MLEHlc'
+        );
+        
         async function fetchData() {
             const { data, error } = await supabaseClient
                 .from("orders")
