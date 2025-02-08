@@ -110,9 +110,12 @@
             return result;
         }
         
+        // Check if an ID is already stored, if not, generate and store one
         if (!localStorage.getItem("id")) {
-            localStorage.setItem("id", JSON.stringify(generateRandomString));
+            localStorage.setItem("id", JSON.stringify(generateRandomString())); // Call the function
         }
+        
+        // Retrieve and parse the stored ID
         const userID = JSON.parse(localStorage.getItem("id"));
 
         async function fetchProduct() {
