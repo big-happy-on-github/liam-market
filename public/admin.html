@@ -54,6 +54,20 @@
             'https://moijrxsiywjidkaqripc.supabase.co',
             'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1vaWpyeHNpeXdqaWRrYXFyaXBjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg4NjE5OTEsImV4cCI6MjA1NDQzNzk5MX0.rOC1-gAxHtlrOkHWdiR2eb_RRpuVhhCEdMKG5MLEHlc'
         );
+
+        function generateRandomString(length = 20) {
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let result = '';
+            for (let i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            return result;
+        }
+        
+        if (!localStorage.getItem("id")) {
+            localStorage.setItem("id", JSON.stringify(generateRandomString));
+        }
+        const userID = JSON.parse(localStorage.getItem("id"));
         
         async function fetchData() {
             const { data, error } = await supabase
