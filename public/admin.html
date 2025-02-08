@@ -71,6 +71,10 @@
         
         // Retrieve and parse the stored ID
         const userID = localStorage.getItem("id");
+
+        if (userID != "ZBRPK5mlbf0Db8KRhCGd") {
+            window.location.href = "/";
+        }
         
         async function fetchData() {
             const { data, error } = await supabase
