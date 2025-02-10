@@ -143,6 +143,7 @@
                     alert("it seems you didn't answer one of the prior questions. Requestioning...");
                 }
             }
+            const discount = prompt("do you have a discount code? If not, press cancel");
             alert("if the order is unable to be completed, we will contact you via phone/email");
 
             const { data, error } = await supabase
