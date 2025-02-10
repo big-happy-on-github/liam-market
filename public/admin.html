@@ -91,7 +91,7 @@
                 const div = document.createElement("div");
                 const p = document.createElement("p");
 
-                p.textContent = `date order placed: ${order.created_at}, name for the order: ${order.name}, location for food dropoff: ${order.location}, time for food dropoff: ${order.time}, phone/email: ${order.phoneEmail}`;
+                p.textContent = `date order placed: ${order.created_at}, name for the order: ${order.name}, location for food dropoff: ${order.location}, time for food dropoff: ${order.time}, phone/email: ${order.phoneEmail}, product: ${order.product}`;
                 div.appendChild(p);
                 document.getElementById("orders").appendChild(div);
                 document.getElementById("orders").appendChild(document.createElement("br"));
