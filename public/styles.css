@@ -41,21 +41,9 @@ main {
     margin-top: 100px;
     padding: 2rem;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    width: 100%;
-}
-
-/* Grid Containers */
-.hot-products-container,
-.other-products-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
-    width: 100%;
-    max-width: 1200px;
     justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
 /* Product Card */
@@ -64,8 +52,7 @@ main {
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    width: 100%;
-    max-width: 250px;
+    width: 250px;
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -111,14 +98,13 @@ main {
 
 /* Hot Deals */
 .hot-deal {
-    border: 2px solid #ff4d4d;
-    box-shadow: 0 4px 8px rgba(255, 77, 77, 0.3);
+    /*background-color: #ff4d4d*/
+    /*color: #ff4d4d;*/
 }
 
 .product-label {
     font-weight: bold;
     padding: 8px;
-    color: #ff4d4d;
 }
 
 /* Footer */
@@ -132,8 +118,18 @@ footer {
 
 /* Responsive */
 @media (max-width: 768px) {
-    .hot-products-container,
-    .other-products-container {
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    main {
+        flex-direction: column;
+        align-items: center;
     }
+}
+
+/* Hot Products & Other Products Containers */
+.hot-products-container, 
+.other-products-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
 }
