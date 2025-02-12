@@ -8,8 +8,33 @@
     <link rel="stylesheet" href="styles.css">
     <script src="safety.js"></script>
     <style>
+        #safety {
+            text-align: center;
+            margin-bottom: 5px; /* Reduce spacing between h2 and products */
+        }
+        
+        h2 {
+            margin-bottom: 5px; /* Reduce space under h2 */
+        }
+        
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        
+        main:last-of-type {
+            flex-direction: row;
+            gap: 10px; /* Controls spacing between product containers */
+        }
+        
         .product-container {
-            top: 10%;
+            width: 45%; /* Adjust as needed */
+            min-height: 200px; /* Example height */
+            border: 1px solid #ccc; /* Example border */
+            padding: 10px;
+            box-sizing: border-box;
         }
     </style>
 </head>
