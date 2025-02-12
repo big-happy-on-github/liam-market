@@ -1,16 +1,30 @@
-﻿Activity 63 Show me the Genes! 
+Activity 63 Stopping to Think
+Please change up the answers a bit when you copy down.
+
+///////////////////////////////////////////////////////
+
+
+Activity 63 Show me the Genes! 
 * Answers in red please
+
 Stopping to think 1: 
 How is the function of cell division in single-celled organisms different from cell division in multicellular organisms?
+
 Cell division in a single celled organism is a form of asexual reproduction. When multicellular organism cells reproduce it is to repair, replace, and grow the organism.
+
 Stopping to think 2: 
 What would happen to the number of chromosomes in each cell if copies of them were not made before cell division?  
+
 The chromosomes would still be split between the offspring and parent, but each would only have 23 chromosomes, half of the usual 46. This would probably cause some problems for both cells.
+
 Stopping to think 3: 
 Why must the number of chromosomes in the sperm and egg be half the number of chromosomes in the other cells of an organism?  
+
 So the fertilized egg cell can take chromosomes from both parents to make up the usual 46. If both the sperm and egg cell have 46 chromosomes, once the egg becomes fertilized it would have 92, which would probably cause problems for the egg cell and cause it to form improperly.
+
 Stopping to think 4: 
 Consider two children with the same two parents. Would you expect them to have the same sets of chromosomes? Explain why or why not.   
+
 No, because it is possible that each offspring would have different alleles from the same parents.
 Stopping to think 5: 
 How exactly does a mutation change the form of an organism? When do such mutations occur?   
